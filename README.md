@@ -1,2 +1,2 @@
-# voicebus
+# VoiceBus
 SUTD Swift Club Hackathon
