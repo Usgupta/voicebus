@@ -14,7 +14,15 @@ struct SpeechButton: View {
     
     @State var isPressed:Bool = false
     @State var actionPop:Bool = false
+    
+//A property wrapper type that can read and write a value managed by SwiftUI.
+//    SwiftUI manages the storage of any property you declare as a state. When the state value changes, the view invalidates its appearance and recomputes the body. Use the state as the single source of truth for a given view.
+//
+//    A State instance isn’t the value itself; it’s a means of reading and writing the value. To access a state’s underlying value, use its variable name, which returns the wrappedValue property value.
+    
     @EnvironmentObject var swiftUISpeech:SwiftUISpeech
+    
+//    An environment object invalidates the current view whenever the observable object changes. If you declare a property as an environment object, be sure to set a corresponding model object on an ancestor view by calling its environmentObject(_:) modifier.
     
     var body: some View {
         
