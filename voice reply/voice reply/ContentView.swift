@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import InstantSearchVoiceOverlay
+
 
 struct ContentView: View {
     
@@ -27,9 +27,6 @@ struct ContentView: View {
                 
                 print("what bus number are you waiting for")
                 
-                tts.initutterance()
-                tts.speechsynthesiser()
-
                 
                 speechRecognizer.reset()
                 speechRecognizer.transcribe()
@@ -41,6 +38,7 @@ struct ContentView: View {
             })
             
             
+            
             Button("Stop recording", action: {
                 
                 print("stopped")
@@ -50,6 +48,12 @@ struct ContentView: View {
 //                print(isRecording)
                 print(speechRecognizer.transcript)
                 
+            })
+            
+            Button("Speak custom text", action: {
+                
+                tts.initutterance()
+                tts.speechsynthesiser()
             })
         }
         
