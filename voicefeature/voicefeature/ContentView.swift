@@ -22,48 +22,97 @@ struct ContentView: View {
     
     var body: some View {
         
+      
+        
         VStack {
-            Button("Verify Bus Timing", action: {
-                
-                print("what bus number are you waiting for")
-                
-                
-
-                
+           
+            Button {
+                tts.initutterance()
+                tts.speechsynthesiser()
+                print("What bus number are you waiting for")
                 speechRecognizer.reset()
                 speechRecognizer.transcribe()
                 isRecording = true
-                
-//                print(isRecording)
+//              print(isRecording)
                 print(speechRecognizer.transcript)
-                
+
+            } label: {
+                HStack {
+                    Image("gps")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                    Text("VERIFY BUS STOP")
+                        .foregroundColor(Color.purple)
+                        .multilineTextAlignment(.leading)
+                        .font(.system(size: 30)).padding()
+                }
+                .padding(.all)
+            }
+            
+            Spacer()
+            
+            Button {
+                tts.initutterance()
+                tts.speechsynthesiser()
+                print("What bus number are you waiting for")
+                speechRecognizer.reset()
+                speechRecognizer.transcribe()
+                isRecording = true
+//              print(isRecording)
+                print(speechRecognizer.transcript)
+
+            } label: {
+                HStack {
+                    Image("clock")
+                        .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    Text("VERIFY BUS TIME")
+                        .foregroundColor(Color.purple)
+                        .multilineTextAlignment(.leading)
+                        .font(.system(size: 30)).padding()
+                }
+                .padding(.all)
+      
+            }
+            
+
+            Spacer()
+            Image("voicebus_logo")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 130.0, height: 130.0)
+            
+            
+        VStack {
+            Button("Verify Bus Timing", action: {
+
+                    print("what bus number are you waiting for")
+                    speechRecognizer.reset()
+                    speechRecognizer.transcribe()
+                    isRecording = true
+    //              print(isRecording)
+                    print(speechRecognizer.transcript)
+
             })
             
-            
-            Button("Stop recording", action: {
-                
+            Button("stop", action: {
+
                 print("stopped")
-                
+
                 speechRecognizer.stopTranscribing()
                 isRecording = false
 //                print(isRecording)
                 print(speechRecognizer.transcript)
-                
-            })
-            
-            Button("Speak out Custom Text", action: {
-                
-                tts.initutterance()
-                tts.speechsynthesiser()
-                
-            })
-        }
-        
-        
-        
-        
 
-    }
+            })
+
+
+        }
+            
+           
+        }
+                
+            }
 }
 
 struct ContentView_Previews: PreviewProvider {

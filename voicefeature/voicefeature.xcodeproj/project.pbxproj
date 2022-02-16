@@ -13,6 +13,8 @@
 		014FFD9F27B76D3C00FC4CA5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 014FFD9E27B76D3C00FC4CA5 /* Preview Assets.xcassets */; };
 		014FFDA627B76D7300FC4CA5 /* texttospeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014FFDA527B76D7300FC4CA5 /* texttospeech.swift */; };
 		014FFDA827B76D9500FC4CA5 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014FFDA727B76D9500FC4CA5 /* SpeechRecognizer.swift */; };
+		3D06438A27BD01FA0008A7AB /* ContentViewcopy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D06438927BD01FA0008A7AB /* ContentViewcopy.swift */; };
+		3D06438C27BD02040008A7AB /* SpeechView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D06438B27BD02030008A7AB /* SpeechView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		014FFDA527B76D7300FC4CA5 /* texttospeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = texttospeech.swift; sourceTree = "<group>"; };
 		014FFDA727B76D9500FC4CA5 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		014FFDA927B76E8D00FC4CA5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3D06438927BD01FA0008A7AB /* ContentViewcopy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewcopy.swift; sourceTree = "<group>"; };
+		3D06438B27BD02030008A7AB /* SpeechView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				014FFD9727B76D3800FC4CA5 /* voicefeatureApp.swift */,
 				014FFD9927B76D3800FC4CA5 /* ContentView.swift */,
 				014FFDA527B76D7300FC4CA5 /* texttospeech.swift */,
+				3D06438B27BD02030008A7AB /* SpeechView.swift */,
+				3D06438927BD01FA0008A7AB /* ContentViewcopy.swift */,
 				014FFDA727B76D9500FC4CA5 /* SpeechRecognizer.swift */,
 				014FFD9B27B76D3C00FC4CA5 /* Assets.xcassets */,
 				014FFD9D27B76D3C00FC4CA5 /* Preview Content */,
@@ -146,8 +152,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				014FFD9A27B76D3800FC4CA5 /* ContentView.swift in Sources */,
+				3D06438A27BD01FA0008A7AB /* ContentViewcopy.swift in Sources */,
 				014FFDA827B76D9500FC4CA5 /* SpeechRecognizer.swift in Sources */,
 				014FFD9827B76D3800FC4CA5 /* voicefeatureApp.swift in Sources */,
+				3D06438C27BD02040008A7AB /* SpeechView.swift in Sources */,
 				014FFDA627B76D7300FC4CA5 /* texttospeech.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

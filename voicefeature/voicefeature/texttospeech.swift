@@ -11,7 +11,7 @@ import AVFoundation
 
 class texttospeech: AVSpeechUtterance {
     
-    let utterance = AVSpeechUtterance(string: "The quick brown fox jumped over the lazy dog.")
+    let utterance = AVSpeechUtterance(string: "What bus number are you waiting for?")
     
     let sysvoice = AVSpeechSynthesisVoice(language: "en-GB")
     
