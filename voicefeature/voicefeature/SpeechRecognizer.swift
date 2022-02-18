@@ -95,6 +95,7 @@ class SpeechRecognizer: ObservableObject {
                     
                     if let result = result {
                         self.speak(result.bestTranscription.formattedString)
+                        print(result)
                         
                         // this is where the message of the transcript is stored can get the result from here to the screen,
                         

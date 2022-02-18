@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01152B5E27BFAB2F00E88E12 /* TextToSpeechv2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01152B5D27BFAB2F00E88E12 /* TextToSpeechv2.swift */; };
 		014FFD9827B76D3800FC4CA5 /* voicefeatureApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014FFD9727B76D3800FC4CA5 /* voicefeatureApp.swift */; };
 		014FFD9A27B76D3800FC4CA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014FFD9927B76D3800FC4CA5 /* ContentView.swift */; };
 		014FFD9C27B76D3C00FC4CA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 014FFD9B27B76D3C00FC4CA5 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		01152B5D27BFAB2F00E88E12 /* TextToSpeechv2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeechv2.swift; sourceTree = "<group>"; };
 		014FFD9427B76D3800FC4CA5 /* voicefeature.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = voicefeature.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		014FFD9727B76D3800FC4CA5 /* voicefeatureApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = voicefeatureApp.swift; sourceTree = "<group>"; };
 		014FFD9927B76D3800FC4CA5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				014FFD9727B76D3800FC4CA5 /* voicefeatureApp.swift */,
 				014FFD9927B76D3800FC4CA5 /* ContentView.swift */,
 				014FFDA527B76D7300FC4CA5 /* texttospeech.swift */,
+				01152B5D27BFAB2F00E88E12 /* TextToSpeechv2.swift */,
 				3D06438B27BD02030008A7AB /* SpeechView.swift */,
 				3D06438927BD01FA0008A7AB /* ContentViewcopy.swift */,
 				014FFDA727B76D9500FC4CA5 /* SpeechRecognizer.swift */,
@@ -151,6 +154,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01152B5E27BFAB2F00E88E12 /* TextToSpeechv2.swift in Sources */,
 				014FFD9A27B76D3800FC4CA5 /* ContentView.swift in Sources */,
 				3D06438A27BD01FA0008A7AB /* ContentViewcopy.swift in Sources */,
 				014FFDA827B76D9500FC4CA5 /* SpeechRecognizer.swift in Sources */,

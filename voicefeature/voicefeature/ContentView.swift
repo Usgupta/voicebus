@@ -8,6 +8,7 @@
 import SwiftUI
 
 
+
 struct ContentView: View {
     
     
@@ -15,7 +16,11 @@ struct ContentView: View {
     @State private var isRecording = false
     
     var transcript: String?
-    @State var tts = texttospeech()
+//    @State var tts = texttospeech()
+    
+    @State var texttoaudio = TextToAudio()
+    
+    
 //    var tts: texttospeech
     
     
@@ -27,14 +32,18 @@ struct ContentView: View {
         VStack {
            
             Button {
-                tts.initutterance(voiceouttext: "hello")
-                tts.speechsynthesiser()
-                print("What bus number are you waiting for")
-                speechRecognizer.reset()
-                speechRecognizer.transcribe()
-                isRecording = true
-//              print(isRecording)
-                print(speechRecognizer.transcript)
+                
+                texttoaudio.canSpeak.sayThis("Based on your current location, you are currently at <get bus stop from bus api>")
+                
+                
+//                tts.initutterance(voiceouttext: "Based on your current location, you are currently at <get bus stop from bus api>")
+//                tts.speechsynthesiser()
+//                print("What bus number are you waiting for")
+//                speechRecognizer.reset()
+//                speechRecognizer.transcribe()
+//                isRecording = true
+////              print(isRecording)
+//                print(speechRecognizer.transcript)
 
             } label: {
                 HStack {
@@ -52,14 +61,61 @@ struct ContentView: View {
             Spacer()
             
             Button {
-                tts.initutterance(voiceouttext: "hello")
-                tts.speechsynthesiser()
-                print("What bus number are you waiting for")
+                
+//                gs.initutterance(voiceouttext: "What bus number are you waiting for")
+                
+            texttoaudio.canSpeak.sayThis("What bus number are you waiting for")
+                
+                
+//                var timer = Timer()
+                
+//                var th = NSCondition()
+//
+//                th.wait(texttoaudio.isfinished){
+//
+//                    print("wait done")
+//                }
+                
+                
+                
+                
+                
+                
+                
+
+                
+//                print("while loop done")
+                
+                
+            
+//                if(texttoaudio.speechDidFinish()){
+//
+//                    print("if executed")
+//                }
+                
+                
+                
+//                tts.initutterance(voiceouttext: "What bus number are you waiting for")
+//                var isspeaken = tts.speechsynthesiser()
+//
+//
+//                print(isspeaken)
+//
+                
+//                print("What bus number are you waiting for") //need to print on the screen
+//
                 speechRecognizer.reset()
                 speechRecognizer.transcribe()
                 isRecording = true
 //              print(isRecording)
                 print(speechRecognizer.transcript)
+                
+//                Thread.sleep(forTimeInterval:1)
+//
+//                print("stopped")
+//                speechRecognizer.stopTranscribing()
+//                print(speechRecognizer.transcript)
+                
 
             } label: {
                 HStack {

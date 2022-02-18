@@ -15,10 +15,14 @@ class texttospeech: AVSpeechUtterance {
     
     let sysvoice = AVSpeechSynthesisVoice(language: "en-GB")
     
+    var hasbeenspoken = true
+    
     func initutterance(voiceouttext: String) {
 
         
         utterance = AVSpeechUtterance(string: voiceouttext)
+        
+//        didFinish utterance
         
         print(utterance.speechString)
         
@@ -29,14 +33,31 @@ class texttospeech: AVSpeechUtterance {
         
         utterance.voice = sysvoice
         
+//        utterance.
     }
     
-    func speechsynthesiser() {
+    
+    func speechsynthesiser()-> Bool {
         
-        
+//        self.hasbeenspoken = false
         let synthesizer = AVSpeechSynthesizer()
         synthesizer.speak(self.utterance)
         
+//        var timetospeak = utterance.rate * Float(lengthutterance.speechString)
+        
+//        synthesizer.(_:didFinish:)
+        
+//        print(timetospeak)
+        
+//        while(synthesizer.isSpeaking){
+//
+//            continue
+//        }
+//
+//        print(synthesizer.isPaused)
+        
+        return synthesizer.isSpeaking
+
         
     }
     
