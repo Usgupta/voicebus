@@ -27,7 +27,7 @@ struct ContentView: View {
         VStack {
            
             Button {
-                tts.initutterance()
+                tts.initutterance(voiceouttext: "hello")
                 tts.speechsynthesiser()
                 print("What bus number are you waiting for")
                 speechRecognizer.reset()
@@ -52,7 +52,7 @@ struct ContentView: View {
             Spacer()
             
             Button {
-                tts.initutterance()
+                tts.initutterance(voiceouttext: "hello")
                 tts.speechsynthesiser()
                 print("What bus number are you waiting for")
                 speechRecognizer.reset()

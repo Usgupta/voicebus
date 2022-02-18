@@ -11,11 +11,16 @@ import AVFoundation
 
 class texttospeech: AVSpeechUtterance {
     
-    let utterance = AVSpeechUtterance(string: "What bus number are you waiting for?")
+    var utterance = AVSpeechUtterance(string: "What bus number are you waiting for?")
     
     let sysvoice = AVSpeechSynthesisVoice(language: "en-GB")
     
-    func initutterance() {
+    func initutterance(voiceouttext: String) {
+
+        
+        utterance = AVSpeechUtterance(string: voiceouttext)
+        
+        print(utterance.speechString)
         
         utterance.rate = 0.45
         utterance.pitchMultiplier = 0.8
