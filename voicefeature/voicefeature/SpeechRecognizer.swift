@@ -77,6 +77,13 @@ class SpeechRecognizer: ObservableObject {
             }
             
             do {
+                
+                var timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
+
+
+
+
+                
                 let (audioEngine, request) = try Self.prepareEngine()
                 self.audioEngine = audioEngine
                 self.request = request
@@ -84,6 +91,10 @@ class SpeechRecognizer: ObservableObject {
                
                 
                 self.task = recognizer.recognitionTask(with: request) { result, error in
+                    //trying to put a timer if no input  for 2 secs then stop accepting
+//                    timer.invalidate()
+//                    timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
+                    
                     let receivedFinalResult = result?.isFinal ?? false
                     let receivedError = error != nil
                     
@@ -94,8 +105,22 @@ class SpeechRecognizer: ObservableObject {
                     }
                     
                     if let result = result {
+//                        count+=1
                         self.speak(result.bestTranscription.formattedString)
                         print(result)
+                        print(result.bestTranscription.formattedString)
+                        
+                        //count 3 works for 1 input but not for some test cases like 125 or bigger numbers, also the issue of number is alphabets rather than digits
+                        
+//                        if(count==3){
+//                            print("we are stopping")
+//                            print(result.bestTranscription.formattedString)
+//                            self.reset()
+//                        }
+//
+
+                        
+                        
                         
                         // this is where the message of the transcript is stored can get the result from here to the screen,
                         

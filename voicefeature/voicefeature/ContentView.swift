@@ -12,7 +12,7 @@ import SwiftUI
 struct ContentView: View {
     
     
-    @StateObject var speechRecognizer = SpeechRecognizer()
+//    @StateObject var speechRecognizer = SpeechRecognizer()
     @State private var isRecording = false
     
     var transcript: String?
@@ -104,12 +104,12 @@ struct ContentView: View {
                 
 //                print("What bus number are you waiting for") //need to print on the screen
 //
-                speechRecognizer.reset()
-                speechRecognizer.transcribe()
-                isRecording = true
-//              print(isRecording)
-                print(speechRecognizer.transcript)
-                
+//                speechRecognizer.reset()
+//                speechRecognizer.transcribe()
+//                isRecording = true
+////              print(isRecording)
+//                print(speechRecognizer.transcript)
+//                
 //                Thread.sleep(forTimeInterval:1)
 //
 //                print("stopped")
@@ -143,11 +143,11 @@ struct ContentView: View {
             Button("Verify Bus Timing", action: {
 
                     print("what bus number are you waiting for")
-                    speechRecognizer.reset()
-                    speechRecognizer.transcribe()
-                    isRecording = true
-    //              print(isRecording)
-                    print(speechRecognizer.transcript)
+//                    speechRecognizer.reset()
+//                    speechRecognizer.transcribe()
+//                    isRecording = true
+//    //              print(isRecording)
+//                    print(speechRecognizer.transcript)
 
             })
             
@@ -155,10 +155,10 @@ struct ContentView: View {
 
                 print("stopped")
 
-                speechRecognizer.stopTranscribing()
-                isRecording = false
-//                print(isRecording)
-                print(speechRecognizer.transcript)
+//                speechRecognizer.stopTranscribing()
+//                isRecording = false
+////                print(isRecording)
+//                print(speechRecognizer.transcript)
 
             })
 

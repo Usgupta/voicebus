@@ -50,9 +50,7 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
 
 class TextToAudio: NSObject, CanSpeakDelegate {
     
-//    var speechRecognizer = SpeechRecognizer()
-    
-    
+    var speechRecognizer = SpeechRecognizer()
     
     var isfinished = false
     
@@ -97,9 +95,17 @@ class TextToAudio: NSObject, CanSpeakDelegate {
 
    // This function will be called every time a speech finishes
    func speechDidFinish() {
-       print(self.isfinished)
-       self.isfinished = true
-       print(self.isfinished)
+//       print(self.isfinished)
+//       self.isfinished = true
+//       print(self.isfinished)
+       
+       self.speechRecognizer.reset()
+       self.speechRecognizer.transcribe()
+//       isRecording = true
+////              print(isRecording)
+       print(speechRecognizer.transcript)
+       
+       //figure out how to stop 
        
        
 
