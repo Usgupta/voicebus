@@ -70,62 +70,133 @@ class SpeechRecognizer: ObservableObject {
         The resulting transcription is continuously written to the published `transcript` property.
      */
     func transcribe() {
+       
         DispatchQueue(label: "Speech Recognizer Queue", qos: .background).async { [weak self] in
             guard let self = self, let recognizer = self.recognizer, recognizer.isAvailable else {
                 self?.speakError(RecognizerError.recognizerIsUnavailable)
                 return
             }
             
+            var count = 0
+            
             do {
                 
+                
+                
                 var timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
-
-
-
 
                 
                 let (audioEngine, request) = try Self.prepareEngine()
                 self.audioEngine = audioEngine
                 self.request = request
                 
-               
-                
                 self.task = recognizer.recognitionTask(with: request) { result, error in
+                    
+                    
                     //trying to put a timer if no input  for 2 secs then stop accepting
 //                    timer.invalidate()
 //                    timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
                     
                     let receivedFinalResult = result?.isFinal ?? false
                     let receivedError = error != nil
-                    
-                    
+
+                    var isFinal = false
+
+
                     if receivedFinalResult || receivedError {
                         audioEngine.stop()
                         audioEngine.inputNode.removeTap(onBus: 0)
                     }
+
+
+//                    recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest,
+//                    resultHandler: { (result, error) in
+//
+//                        var isFinal = false
+//
+//                        if result != nil {
+//
+//                            self.inputTextView.text = result?.bestTranscription.formattedString
+//                            isFinal = (result?.isFinal)!
+//                        }
+//
+//                        if let timer = self.detectionTimer, timer.isValid {
+//                            if isFinal {
+//                                self.inputTextView.text = ""
+//                                self.textViewDidChange(self.inputTextView)
+//                                self.detectionTimer?.invalidate()
+//                            }
+//                        } else {
+//                            self.detectionTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { (timer) in
+//                                self.handleSend()
+//                                isFinal = true
+//                                timer.invalidate()
+//                            })
+//                        }
+//
+//                    })
                     
+                    timer.invalidate()
+                    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
+
+
                     if let result = result {
 //                        count+=1
                         self.speak(result.bestTranscription.formattedString)
+                        isFinal = result.isFinal
                         print(result)
-                        print(result.bestTranscription.formattedString)
+                        print("before timer", result.bestTranscription.formattedString)
+                        print("number",result.bestTranscription.formattedString.numericValue)
                         
-                        //count 3 works for 1 input but not for some test cases like 125 or bigger numbers, also the issue of number is alphabets rather than digits
-                        
-//                        if(count==3){
-//                            print("we are stopping")
-//                            print(result.bestTranscription.formattedString)
-//                            self.reset()
-//                        }
+//                        timer.invalidate()
+//                        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
 //
+//                        print("after timer",result.bestTranscription.formattedString)
 
                         
+
+//                        count 3 works for 1 input but not for some test cases like 125 or bigger numbers, also the issue of number is alphabets rather than digits
+
+//                        if(count==4){
+//                            print("we are stopping")
+//                            print(result.bestTranscription.formattedString)
+//
+//                            self.reset()
+//                        }
                         
-                        
+//                        if  numberInput == "" {
+//                            timer.invalidate()
+//                            timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
+//                        } else {
+//                            // do your stuff using "strWord"
+                            
+                        }
+//
+
                         // this is where the message of the transcript is stored can get the result from here to the screen,
-                        
-                        
-                    }
+
+
+                    
+
+
+//                    if let timer = self.detectionTimer, timer.isValid {
+//                        if isFinal {
+//                            self.inputTextView.text = ""
+//                            self.textViewDidChange(self.inputTextView)
+//                            self.detectionTimer?.invalidate()
+//
+//                        }
+//
+//                    } else {
+//                        self.detectionTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { (timer) in
+////                            self.handleSend()
+//                            isFinal = true
+//                            timer.invalidate()
+//
+//                        }
+//
+//                    }
+                    
                 }
             } catch {
                 self.reset()
@@ -201,5 +272,31 @@ extension AVAudioSession {
                 continuation.resume(returning: authorized)
             }
         }
+    }
+}
+
+extension String {
+
+    var numericValue: NSNumber? {
+
+        //init number formater
+        let numberFormater = NumberFormatter()
+
+        //check if string is numeric
+        numberFormater.numberStyle = .decimal
+
+        guard let number = numberFormater.number(from: self.lowercased()) else {
+
+            //check if string is spelled number
+            numberFormater.numberStyle = .spellOut
+
+            //change language to spanish
+            //numberFormater.locale = Locale(identifier: "es")
+
+            return numberFormater.number(from: self.lowercased())
+        }
+
+        // return converted numeric value
+        return number
     }
 }

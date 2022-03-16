@@ -24,7 +24,6 @@ struct ContentView: View {
 //    var tts: texttospeech
     
     
-    
     var body: some View {
         
       
@@ -33,7 +32,13 @@ struct ContentView: View {
            
             Button {
                 
+                //bus api to find the current bus stop and store it in a variable
+                
+                texttoaudio.verifybusstopbutton = true
+                
                 texttoaudio.canSpeak.sayThis("Based on your current location, you are currently at <get bus stop from bus api>")
+                
+                
                 
                 
 //                tts.initutterance(voiceouttext: "Based on your current location, you are currently at <get bus stop from bus api>")
@@ -66,6 +71,8 @@ struct ContentView: View {
                 
             texttoaudio.canSpeak.sayThis("What bus number are you waiting for")
                 
+                //make an array for the bus stop names
+                
                 
 //                var timer = Timer()
                 
@@ -75,13 +82,6 @@ struct ContentView: View {
 //
 //                    print("wait done")
 //                }
-                
-                
-                
-                
-                
-                
-                
 
                 
 //                print("while loop done")

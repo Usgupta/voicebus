@@ -54,7 +54,11 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     var isfinished = false
     
+    var verifybusstopbutton = false
+    
     let canSpeak = CanSpeak()
+    
+    var voicereply = ""
     
     var utterance = AVSpeechUtterance(string: "What bus number are you waiting for?")
     
@@ -99,11 +103,19 @@ class TextToAudio: NSObject, CanSpeakDelegate {
 //       self.isfinished = true
 //       print(self.isfinished)
        
-       self.speechRecognizer.reset()
-       self.speechRecognizer.transcribe()
-//       isRecording = true
-////              print(isRecording)
-       print(speechRecognizer.transcript)
+       if(verifybusstopbutton == false){
+           
+           
+           self.speechRecognizer.reset()
+           self.speechRecognizer.transcribe()
+    //       isRecording = true
+    ////              print(isRecording)
+           print(speechRecognizer.transcript)
+           voicereply = speechRecognizer.transcript
+           
+       }
+       
+       
        
        //figure out how to stop 
        
