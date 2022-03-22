@@ -18,7 +18,32 @@ struct ContentView: View {
     var transcript: String?
 //    @State var tts = texttospeech()
     
-    @State var texttoaudio = TextToAudio()
+    
+    @State private var isstate = 1{
+        
+        didSet {
+            
+            busnumber = texttoaudio.voicereply
+            
+        }
+        
+    }
+    
+    
+    @State var texttoaudio = TextToAudio(){
+        
+        didSet {
+            
+            busnumber = texttoaudio.voicereply
+            
+        }
+        
+    }
+    
+
+
+        
+       
     
     
 //    var tts: texttospeech
@@ -37,6 +62,8 @@ struct ContentView: View {
                 texttoaudio.verifybusstopbutton = true
                 
                 texttoaudio.canSpeak.sayThis("Based on your current location, you are currently at <get bus stop from bus api>")
+                
+                print("done speaking")
                 
                 
                 
@@ -70,6 +97,15 @@ struct ContentView: View {
 //                gs.initutterance(voiceouttext: "What bus number are you waiting for")
                 
             texttoaudio.canSpeak.sayThis("What bus number are you waiting for")
+                
+                print(texttoaudio.voicereply)
+                
+                isstate+=1
+                
+                
+                
+                
+//                texttoaudio.speechRecognizer.self.
                 
                 //make an array for the bus stop names
                 
@@ -131,6 +167,7 @@ struct ContentView: View {
       
             }
             
+            Text(busnumber)
 
             Spacer()
             Image("voicebus_logo")
