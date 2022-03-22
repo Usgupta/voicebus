@@ -167,7 +167,7 @@ struct ContentView: View {
       
             }
             
-            Text(busnumber)
+//            Text(busnumber)
 
             Spacer()
             Image("voicebus_logo")

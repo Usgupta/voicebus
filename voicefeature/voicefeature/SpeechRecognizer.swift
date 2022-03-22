@@ -97,17 +97,17 @@ class SpeechRecognizer: ObservableObject{
         
         
         
-        DispatchQueue.main.async{ [weak self] in
-            guard let self = self, let recognizer = self.recognizer, recognizer.isAvailable else {
-                self?.speakError(RecognizerError.recognizerIsUnavailable)
-                return
-            }
-
-//        DispatchQueue(label: "Speech Recognizer Queue", qos: .userInteractive).async { [weak self] in
+//        DispatchQueue.main.async{ [weak self] in
 //            guard let self = self, let recognizer = self.recognizer, recognizer.isAvailable else {
 //                self?.speakError(RecognizerError.recognizerIsUnavailable)
 //                return
 //            }
+
+        DispatchQueue(label: "Speech Recognizer Queue", qos: .background).async { [weak self] in
+            guard let self = self, let recognizer = self.recognizer, recognizer.isAvailable else {
+                self?.speakError(RecognizerError.recognizerIsUnavailable)
+                return
+            }
             
             
             do {
