@@ -19,26 +19,28 @@ struct ContentView: View {
 //    @State var tts = texttospeech()
     
     
-    @State private var isstate = 1{
-        
-        didSet {
-            
-            busnumber = texttoaudio.voicereply
-            
-        }
-        
-    }
+//    @State private var isstate = 1{
+//
+//        didSet {
+//
+//            busnumber = texttoaudio.voicereply
+//
+//        }
+//
+//    }
     
     
-    @State var texttoaudio = TextToAudio(){
-        
-        didSet {
-            
-            busnumber = texttoaudio.voicereply
-            
-        }
-        
-    }
+    @State var texttoaudio = TextToAudio()
+    
+//    {
+//
+//        didSet {
+//
+//            busnumber = texttoaudio.voicereply
+//
+//        }
+//
+//    }
     
 
 
@@ -96,11 +98,24 @@ struct ContentView: View {
                 
 //                gs.initutterance(voiceouttext: "What bus number are you waiting for")
                 
-            texttoaudio.canSpeak.sayThis("What bus number are you waiting for")
+                DispatchQueue.main.async {
+                    texttoaudio.canSpeak.sayThis("What bus number are you waiting for")
+                    
+                }
+                //
+                //
+                //
+                //                   print("transcropt end")
+                //                   print(self.speechRecognizer.transcript)
+                //                   self.voicereply = self.speechRecognizer.transcript
+                //
+                //
+                //               }
                 
+           
                 print(texttoaudio.voicereply)
-                
-                isstate+=1
+                                
+//                isstate+=1
                 
                 
                 

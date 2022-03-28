@@ -35,7 +35,7 @@ class SpeechRecognizer: ObservableObject{
     public var task: SFSpeechRecognitionTask?
     private let recognizer: SFSpeechRecognizer?
     
-    public var count = 0
+    public var count = 1
 //    public var timerover: Bool
     
 //    private var transtr = UITextView()
@@ -81,6 +81,7 @@ class SpeechRecognizer: ObservableObject{
     
     var timer = Timer.init()
     
+    
     func restartSpeechTimer() {
         timer.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: false, block: { (timer) in
@@ -96,6 +97,15 @@ class SpeechRecognizer: ObservableObject{
     func transcribe() {
         
         
+//
+//        guard let recognizer = self.recognizer, recognizer.isAvailable else {
+//
+//            self.speakError(RecognizerError.recognizerIsUnavailable)
+//
+//         }
+//
+        
+        
         
 //        DispatchQueue.main.async{ [weak self] in
 //            guard let self = self, let recognizer = self.recognizer, recognizer.isAvailable else {
@@ -103,16 +113,22 @@ class SpeechRecognizer: ObservableObject{
 //                return
 //            }
 
-        DispatchQueue(label: "Speech Recognizer Queue", qos: .background).async { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             guard let self = self, let recognizer = self.recognizer, recognizer.isAvailable else {
                 self?.speakError(RecognizerError.recognizerIsUnavailable)
                 return
             }
             
+          
+            
             
             do {
+                
+                
      
-                let (audioEngine, request) = try Self.prepareEngine()
+                let (audioEngine, request) = try
+                SpeechRecognizer.prepareEngine()
+                
                 self.audioEngine = audioEngine
                 self.request = request
                 
@@ -137,23 +153,29 @@ class SpeechRecognizer: ObservableObject{
                         print(result.bestTranscription.formattedString)
                         }
                     
-                    
-//                    if(count==4){
+                    typealias dispatch_queue_serial_t = OS_dispatch_queue_serial
+
+//                    self.count+=1
+//                    
+//                    if(self.count==5){
+//                        self.count = 1
 //                        print("we are stopping")
-//                        print(result.bestTranscription.formattedString)
+//                        print(result?.bestTranscription.formattedString)
 //                    
 //                        self.reset()
 //                        
 //                    }
                     
+                    
+                    
 
-                    if isFinal {
-                            self.stopTranscribing()
-                        }
-                    else if error == nil {
-                        self.restartSpeechTimer()
-                        self.task?.cancel()
-                    }
+//                    if isFinal {
+//                            self.stopTranscribing()
+//                        }
+//                    else if error == nil {
+//                        self.restartSpeechTimer()
+//                        self.task?.cancel()
+//                    }
 //                         this is where the message of the transcript is stored can get the result from here to the screen,
                 
                     
@@ -171,7 +193,6 @@ class SpeechRecognizer: ObservableObject{
     func stopTranscribing() {
         
         reset()
-        
         
     }
     

@@ -101,21 +101,27 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     func WaitSpeechtoFinishTimer() {
 
 
-        self.timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: !(self.speechRecognizer.self.task?.isCancelled ?? false), block: { (timer) in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
+            
+            print("transcript to be stopped 5 secs are finished")
+            print(self.speechRecognizer.transcript)
+            self.speechRecognizer.reset()
 
 
 
-            if((self.speechRecognizer.self.task?.isCancelled) == nil){
-
-                print("returning to speechdidfinish")
-                self.timer.invalidate()
-
-                return
-
-            }
-        print("timer speech to finish")
-            print(self.speechRecognizer.self.task?.isCancelled)
+//            if((self.speechRecognizer.self.task?.isCancelled) == nil){
+//
+//                print("returning to speechdidfinish")
+//                self.timer.invalidate()
+//
+//                return
+//
+//            }
+//        print("timer speech to finish")
+//            print(self.speechRecognizer.self.task?.isCancelled)
         })
+        
+        print("outside timer loop")
     }
     
     
@@ -132,9 +138,15 @@ class TextToAudio: NSObject, CanSpeakDelegate {
            self.speechRecognizer.reset()
            print("transcropt start")
            
-           self.speechRecognizer.transcribe()
+           DispatchQueue.main.async {
+               self.speechRecognizer.transcribe()
+               self.WaitSpeechtoFinishTimer()
+
+
+           }
            
-           self.voicereply = "HELLO"
+           
+//           self.voicereply = "HELLO"
            
            
 //           Thread.sleep(forTimeInterval: 10)
@@ -181,14 +193,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
 //           self.speechRecognizer.transcribe()
 
            
-//           self.WaitSpeechtoFinishTimer()
            print("transcropt end")
-
-           
-           
-           
-          
-           
            
        }
            
