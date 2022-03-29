@@ -144,7 +144,7 @@ class SpeechRecognizer: ObservableObject{
 
                     if receivedFinalResult || receivedError {
                         print("checkpt2 received final res", receivedFinalResult)
-                        print("error", receivedError)
+                        print("rec error", receivedError, "error ", error)
                         audioEngine.stop()
                         audioEngine.inputNode.removeTap(onBus: 0)
                     }

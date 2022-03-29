@@ -84,8 +84,8 @@ struct ContentView: View {
                 Button {
                     
                     
-                    
                     self.busStopCode = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
+                    
                     
                     
                     texttoaudio.verifybusstopbutton = true
@@ -139,19 +139,19 @@ struct ContentView: View {
                     DispatchQueue.main.async {
                         
                         texttoaudio.canSpeak.sayThis("What bus number are you waiting for")
+                    
+                    }
+                    
+                    BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.texttoaudio.busservices) { item in
+        //                self.busArrivalResponses = item
+        //                self.busSvcNum = item.services[0].svcNum
                         
-                        BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.texttoaudio.busservices) { item in
-            //                self.busArrivalResponses = item
-            //                self.busSvcNum = item.services[0].svcNum
-                            
-                            self.busTimings = ""
-                            print(item)
-                            
-                            for svc in self.texttoaudio.busservices {
-                                self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
-                            }
+                        self.busTimings = ""
+                        print(item)
+                        
+                        for svc in self.texttoaudio.busservices {
+                            self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
                         }
-                        
                     }
                     
                    
