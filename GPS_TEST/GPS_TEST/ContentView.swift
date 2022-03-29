@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-
+//pop up here
 struct Popup<D, V: View>: ViewModifier {
     let popup: (Binding<D>) -> V
     let isPresented: Binding<Bool>
@@ -41,12 +41,6 @@ extension View {
     }
 }
 
-//variable deets
-struct Thing: Identifiable {
-    let id = UUID()
-    var name: String
-}
-
 
 struct ContentView: View {
 
@@ -55,7 +49,6 @@ struct ContentView: View {
     @State private var coordinates = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     @State private var currentLat: Double = 0.0
     @State private var currentLong: Double = 0.0
-
 
     // BusArrival
     @State private var busArrivalResponses = BusArrivalInfo(metadata: "", busStopCode: "", services: [])
@@ -83,10 +76,11 @@ struct ContentView: View {
 
     // Timer
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
-
+    
+    // Notification
     @State private var feedback = UINotificationFeedbackGenerator()
-    @State private var thing: Thing = Thing(name: "Bus Arriving in 5 minutes")
     @State private var showPopup: Bool = false
+    @State private var selectedPicture = Int.random(in: 0...3) //accesiblilty
 
     var body: some View {
 //        Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
@@ -171,8 +165,10 @@ struct ContentView: View {
             Text(self.busTimings)
         }
 
-//        Spacer()
+        Spacer()
         
+        // Testing Accessibility Labels
+        let labels = ["Request Permission", "chicken"]
         Button("Request Permission") {
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
                 if success {
@@ -182,77 +178,49 @@ struct ContentView: View {
                     print(error.localizedDescription)
                 }
             }
-        }
+        }.onTapGesture{selectedPicture = 1}
+        .accessibilityLabel(labels[selectedPicture] )
+        .accessibilityAddTraits(.isButton)
+        Spacer()
 
-
+        // Pop up & slide in notification here
         Button("Schedule Notification") {
-//
-//            let state = UIApplication.shared.applicationState
-//            if state == .background || state == .inactive {
-//                let content = UNMutableNotificationContent()
-//                content.title = "Bus Timing"  //pass this: self.busTimings
-//                content.subtitle = "5 minutes" //pass this: self.busTimings
-//                content.sound = UNNotificationSound.default //plays sound
-//                feedback.notificationOccurred(.success) //vibrates buzz
-//                // show this notification five seconds from now
-//                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-//                // choose a random identifier
-//                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-//                // add our notification request
-//                UNUserNotificationCenter.current().add(request)
-//            } else if state == .active {
-//                print("active")
-//                feedback.prepare()
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//                    showPopup = true
-//                    feedback.notificationOccurred(.success)
-//            }
-//            }
-//        }
-//
-            
-
            // IF APP ACTIVE
            feedback.prepare()
-           DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+           DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                showPopup = true
                feedback.notificationOccurred(.success)
-               
            }
- 
-//            IF APP INACTIVE/ background
-           let content = UNMutableNotificationContent()
-           content.title = "Bus Timing"  //pass this: self.busTimings
-           content.subtitle = "5 minutes" //pass this: self.busTimings
-           content.sound = UNNotificationSound.default //plays sound
-           feedback.notificationOccurred(.success) //vibrates buzz
-           // show this notification five seconds from now
-           let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-           // choose a random identifier
-           let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-           // add our notification request
-           UNUserNotificationCenter.current().add(request)
+            // IF APP INACTIVE/ background
+            let content = UNMutableNotificationContent()
+            content.title = "Your Bus is Arriving!"
+            content.subtitle = self.busTimings
+            content.sound = UNNotificationSound.default //plays sound
+            feedback.notificationOccurred(.success) //vibrates buzz
+            // show this notification five seconds from now
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+            // choose a random identifier
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            // add our notification request
+            UNUserNotificationCenter.current().add(request)
         }
-
-//        POP UP IF APP ACTIVE
-//        .popup(isPresented: $showPopup, with: $thing) { item in
-        .popup(isPresented: $showPopup, with: $thing) { item in
-
+        //POP UP IF APP ACTIVE
+        .popup(isPresented: $showPopup, with: $busTimings) { item in
             VStack(spacing: 20) {
-                TextField("Name", text: item.name) //pass this: self.busTimings
+                TextField("Name", text: self.$busTimings)
                 Button {
                     showPopup = false
                 } label: {
                     Text("Dismiss Popup")
                 }
             }
-            .frame(width: 200)
+            .frame(width: 300)
             .padding()
             .background(Color.gray)
             .cornerRadius(8)
         }
+        Spacer()
     }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
