@@ -56,6 +56,8 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     var verifybusstopbutton = false
     
+    var popupspeak = false
+    
     var timer = Timer.init()
     
     
@@ -107,7 +109,14 @@ class TextToAudio: NSObject, CanSpeakDelegate {
 //       self.isfinished = true
 //       print(self.isfinished)
        
-       if(verifybusstopbutton == false){
+       if (popupspeak == true){
+           
+           //invoke check bus timing functon
+           
+       }
+       
+       
+       if(verifybusstopbutton == false || popupspeak == false){
            
         
 
