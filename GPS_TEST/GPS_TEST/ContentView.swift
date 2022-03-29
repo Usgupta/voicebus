@@ -10,6 +10,11 @@ import MapKit
 
 struct ContentView: View {
     
+    @State private var isRecording = false
+        
+    @State var texttoaudio = TextToAudio()
+
+    
     // GPS
     @StateObject private var viewModel = ContentViewModel()
     @State private var coordinates = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
@@ -20,7 +25,7 @@ struct ContentView: View {
     // BusArrival
     @State private var busArrivalResponses = BusArrivalInfo(metadata: "", busStopCode: "", services: [])
     @State private var busTimings = "not yet retrieved from api"
-    @State private var busServices = ["2"] //["9", "10"]
+    @State private var busServices = ["20"] //["9", "10"]
     
     // BusStop
     @State private var busStopResponses = BusStopInfo(metadata: "", busStops: [])
@@ -77,7 +82,18 @@ struct ContentView: View {
                 
                 // Bus Stop
                 Button {
+                    
+                    
+                    
                     self.busStopCode = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
+                    
+                    
+                    texttoaudio.verifybusstopbutton = true
+                                    
+                    texttoaudio.canSpeak.sayThis("Based on your current location, you are currently at \(self.busStopCode)")
+                                    
+                    print("done speaking")
+                    
                 } label: {
                     VStack {
                         Image(systemName: "mappin.and.ellipse")
@@ -119,17 +135,26 @@ struct ContentView: View {
                 
                 // Bus Service
                 Button {
-                    BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.busServices) { item in
-        //                self.busArrivalResponses = item
-        //                self.busSvcNum = item.services[0].svcNum
+                    
+                    DispatchQueue.main.async {
                         
-                        self.busTimings = ""
-                        print(item)
+                        texttoaudio.canSpeak.sayThis("What bus number are you waiting for")
                         
-                        for svc in self.busServices {
-                            self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
+                        BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.texttoaudio.busservices) { item in
+            //                self.busArrivalResponses = item
+            //                self.busSvcNum = item.services[0].svcNum
+                            
+                            self.busTimings = ""
+                            print(item)
+                            
+                            for svc in self.texttoaudio.busservices {
+                                self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
+                            }
                         }
+                        
                     }
+                    
+                   
                 } label: {
                     VStack {
                         Image(systemName: "clock.fill")
@@ -151,14 +176,14 @@ struct ContentView: View {
                 .cornerRadius(10)
                 .shadow(radius: 20)
                 .onReceive(timer) { input in
-                    BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.busServices) { item in
+                    BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.texttoaudio.busservices) { item in
         //                self.busArrivalResponses = item
         //                self.busSvcNum = item.services[0].svcNum
                         
                         self.busTimings = ""
                         print(item)
                         
-                        for svc in self.busServices {
+                        for svc in self.texttoaudio.busservices {
                             self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
                         }
                     }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		012B915427F30021000226D4 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012B915327F30021000226D4 /* SpeechRecognizer.swift */; };
+		012B915627F3004E000226D4 /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012B915527F3004E000226D4 /* TextToSpeech.swift */; };
 		742278FD27D9DA450073A37D /* BusArrivalApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742278FC27D9DA450073A37D /* BusArrivalApi.swift */; };
 		742278FF27D9DA690073A37D /* BusArrivalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742278FE27D9DA690073A37D /* BusArrivalInfo.swift */; };
 		7422790427D9DBC40073A37D /* BusStopApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7422790327D9DBC40073A37D /* BusStopApi.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		012B915327F30021000226D4 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
+		012B915527F3004E000226D4 /* TextToSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
 		742278FC27D9DA450073A37D /* BusArrivalApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusArrivalApi.swift; sourceTree = "<group>"; };
 		742278FE27D9DA690073A37D /* BusArrivalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusArrivalInfo.swift; sourceTree = "<group>"; };
 		7422790327D9DBC40073A37D /* BusStopApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopApi.swift; sourceTree = "<group>"; };
@@ -43,6 +47,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		012B915227F2FFEE000226D4 /* Voice */ = {
+			isa = PBXGroup;
+			children = (
+				012B915327F30021000226D4 /* SpeechRecognizer.swift */,
+				012B915527F3004E000226D4 /* TextToSpeech.swift */,
+			);
+			path = Voice;
+			sourceTree = "<group>";
+		};
 		7422790027D9DA800073A37D /* BusArrival */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +106,7 @@
 				7422790027D9DA800073A37D /* BusArrival */,
 				7422790127D9DA8F0073A37D /* GPS */,
 				749B213027BF86C400A63D9E /* ContentView.swift */,
+				012B915227F2FFEE000226D4 /* Voice */,
 				749B213227BF86C900A63D9E /* Assets.xcassets */,
 				749B213727BF86C900A63D9E /* Info.plist */,
 				749B213427BF86C900A63D9E /* Preview Content */,
@@ -178,11 +192,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				749B213127BF86C400A63D9E /* ContentView.swift in Sources */,
+				012B915427F30021000226D4 /* SpeechRecognizer.swift in Sources */,
 				742278FF27D9DA690073A37D /* BusArrivalInfo.swift in Sources */,
 				749B212F27BF86C400A63D9E /* GPS_TESTApp.swift in Sources */,
 				7422790627D9DE950073A37D /* BusStopInfo.swift in Sources */,
 				749B213E27BF8D6700A63D9E /* ContentViewModel.swift in Sources */,
 				742278FD27D9DA450073A37D /* BusArrivalApi.swift in Sources */,
+				012B915627F3004E000226D4 /* TextToSpeech.swift in Sources */,
 				7422790427D9DBC40073A37D /* BusStopApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
