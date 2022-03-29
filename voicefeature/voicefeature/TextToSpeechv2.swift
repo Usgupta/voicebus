@@ -78,26 +78,14 @@ class TextToAudio: NSObject, CanSpeakDelegate {
 
         
         utterance = AVSpeechUtterance(string: voiceouttext)
-        
-//        didFinish utterance
-        
-        print(utterance.speechString)
-        
         utterance.rate = 0.45
         utterance.pitchMultiplier = 0.8
         utterance.postUtteranceDelay = 0.2
         utterance.volume = 0.8
-        
         utterance.voice = sysvoice
         
-//        utterance.
     }
     
-    
-//    func returnspeechdidfinish()-> Bool{
-//
-//        return true
-////    }
     func WaitSpeechtoFinishTimer() {
 
 
@@ -107,18 +95,6 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             print(self.speechRecognizer.transcript)
             self.speechRecognizer.reset()
 
-
-
-//            if((self.speechRecognizer.self.task?.isCancelled) == nil){
-//
-//                print("returning to speechdidfinish")
-//                self.timer.invalidate()
-//
-//                return
-//
-//            }
-//        print("timer speech to finish")
-//            print(self.speechRecognizer.self.task?.isCancelled)
         })
         
         print("outside timer loop")
@@ -133,83 +109,18 @@ class TextToAudio: NSObject, CanSpeakDelegate {
        
        if(verifybusstopbutton == false){
            
-           print("reset start")
+        
 
            self.speechRecognizer.reset()
-           print("transcropt start")
-           
            DispatchQueue.main.async {
                self.speechRecognizer.transcribe()
                self.WaitSpeechtoFinishTimer()
 
 
            }
-           
-           
-//           self.voicereply = "HELLO"
-           
-           
-//           Thread.sleep(forTimeInterval: 10)
-           
-//           print(self.speechRecognizer.self.task?.isCancelled)
-//           
-//           while(self.speechRecognizer.self.task?.isCancelled == true){
-//               
-//               print(self.speechRecognizer.self.task?.isCancelled)
-//
-//
-//
-//
-//               print("while lopp")
-//
-//           }
-//           
-//           print(self.speechRecognizer.self.task?.isCancelled)
 
-           
-//           print("transcropt end")
-
-           
-           
-           
-           
-//           DispatchQueue.global(qos: .userInitiated).async{
-//
-//               self.speechRecognizer.transcribe()
-//
-//               DispatchQueue.main.async {
-//
-//
-//
-//                   print("transcropt end")
-//                   print(self.speechRecognizer.transcript)
-//                   self.voicereply = self.speechRecognizer.transcript
-//
-//
-//               }
-//
-//           }
-               
-//           self.speechRecognizer.transcribe()
-
-           
-           print("transcropt end")
-           
        }
            
-           
-
-   
-       
-
-       
-       
-       //figure out how to stop 
-       
-       
-
-       
-      // Do something
    }
     
     

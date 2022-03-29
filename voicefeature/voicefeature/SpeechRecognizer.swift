@@ -36,9 +36,7 @@ class SpeechRecognizer: ObservableObject{
     private let recognizer: SFSpeechRecognizer?
     
     public var count = 1
-//    public var timerover: Bool
-    
-//    private var transtr = UITextView()
+
     /**
      Initializes a new speech recognizer. If this is the first time you've used the class, it
      requests access to the speech recognizer and the microphone.
