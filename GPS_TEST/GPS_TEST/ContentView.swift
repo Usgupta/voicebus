@@ -8,6 +8,46 @@
 import SwiftUI
 import MapKit
 
+
+struct Popup<D, V: View>: ViewModifier {
+    let popup: (Binding<D>) -> V
+    let isPresented: Binding<Bool>
+    let data: Binding<D>
+
+    init(isPresented: Binding<Bool>, with data: Binding<D>, @ViewBuilder content: @escaping (Binding<D>) -> V) {
+        self.isPresented = isPresented
+        popup = content
+        self.data = data
+    }
+
+    func body(content: Content) -> some View {
+        content
+            .overlay(popupContent())
+    }
+
+    @ViewBuilder private func popupContent() -> some View {
+        GeometryReader { geometry in
+            if isPresented.wrappedValue {
+                popup(data)
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+            }
+        }
+    }
+}
+
+extension View {
+    func popup<D, V: View>(isPresented: Binding<Bool>, with data: Binding<D>, @ViewBuilder content: @escaping (Binding<D>) -> V) -> some View {
+        self.modifier(Popup(isPresented: isPresented, with: data, content: content))
+    }
+}
+
+//variable deets
+struct Thing: Identifiable {
+    let id = UUID()
+    var name: String
+}
+
+
 struct ContentView: View {
     
     // GPS
@@ -24,6 +64,7 @@ struct ContentView: View {
     
     // BusStop
     @State private var busStopResponses = BusStopInfo(metadata: "", busStops: [])
+    @State private var busStopNearest = "retrieving..."
     @State private var urls = [
         "http://datamall2.mytransport.sg/ltaodataservice/BusStops",
         "http://datamall2.mytransport.sg/ltaodataservice/BusStops?$skip=500",
@@ -43,6 +84,10 @@ struct ContentView: View {
     // Timer
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
+    @State private var feedback = UINotificationFeedbackGenerator()
+    @State private var thing: Thing = Thing(name: "Bus Arriving in 5 minutes")
+    @State private var showPopup: Bool = false
+
     var body: some View {
 //        Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
 //            .ignoresSafeArea()
@@ -72,6 +117,8 @@ struct ContentView: View {
         VStack {
             Button("Check Bus Stop") {
                 self.busStopCode = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
+                self.busStopNearest = "Nearest bus stop is: \(busStopCode)"
+        
             }
             .onAppear {
                 // GPS
@@ -88,7 +135,7 @@ struct ContentView: View {
                     }
                 }
             }
-            Text("Nearest bus stop is: \(busStopCode)")
+            Text(self.busStopNearest)
         }
         
         Spacer()
@@ -125,12 +172,53 @@ struct ContentView: View {
         }
         
         Spacer()
+        
+        Button("Schedule Notification") {
+        
+           // IF APP ACTIVE
+           feedback.prepare()
+           DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+               showPopup = true
+               feedback.notificationOccurred(.success)
 
+           // IF APP INACTIVE/ background
+           let content = UNMutableNotificationContent()
+           content.title = "Bus Timing"
+           content.subtitle = "5 minutes"
+           content.sound = UNNotificationSound.default //plays sound
+           feedback.notificationOccurred(.success) //vibrates buzz
+           // show this notification five seconds from now
+           let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+           // choose a random identifier
+           let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+           // add our notification request
+           UNUserNotificationCenter.current().add(request)
+               
+           }}
+        //POP UP IF APP ACTIVE
+//        .popup(isPresented: $showPopup, with: $thing) { item in
+        .popup(isPresented: $showPopup, with: $thing) { item in
+            
+            VStack(spacing: 20) {
+                TextField("Name", text: item.name)
+                Button {
+                    showPopup = false
+                } label: {
+                    Text("Dismiss Popup")
+                }
+            }
+            .frame(width: 200)
+            .padding()
+            .background(Color.gray)
+            .cornerRadius(8)
+        }
     }
-}
+    
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
+}
+
 }

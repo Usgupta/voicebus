@@ -12,6 +12,7 @@ struct GPS_TESTApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+//            NotificationView()
         }
     }
 }

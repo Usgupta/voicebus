@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DBB957127F2BE0200054553 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBB957027F2BE0200054553 /* NotificationView.swift */; };
 		742278FD27D9DA450073A37D /* BusArrivalApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742278FC27D9DA450073A37D /* BusArrivalApi.swift */; };
 		742278FF27D9DA690073A37D /* BusArrivalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742278FE27D9DA690073A37D /* BusArrivalInfo.swift */; };
 		7422790427D9DBC40073A37D /* BusStopApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7422790327D9DBC40073A37D /* BusStopApi.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3DBB957027F2BE0200054553 /* NotificationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		742278FC27D9DA450073A37D /* BusArrivalApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusArrivalApi.swift; sourceTree = "<group>"; };
 		742278FE27D9DA690073A37D /* BusArrivalInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusArrivalInfo.swift; sourceTree = "<group>"; };
 		7422790327D9DBC40073A37D /* BusStopApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopApi.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				7422790027D9DA800073A37D /* BusArrival */,
 				7422790127D9DA8F0073A37D /* GPS */,
 				749B213027BF86C400A63D9E /* ContentView.swift */,
+				3DBB957027F2BE0200054553 /* NotificationView.swift */,
 				749B213227BF86C900A63D9E /* Assets.xcassets */,
 				749B213727BF86C900A63D9E /* Info.plist */,
 				749B213427BF86C900A63D9E /* Preview Content */,
@@ -180,6 +183,7 @@
 				749B213127BF86C400A63D9E /* ContentView.swift in Sources */,
 				742278FF27D9DA690073A37D /* BusArrivalInfo.swift in Sources */,
 				749B212F27BF86C400A63D9E /* GPS_TESTApp.swift in Sources */,
+				3DBB957127F2BE0200054553 /* NotificationView.swift in Sources */,
 				7422790627D9DE950073A37D /* BusStopInfo.swift in Sources */,
 				749B213E27BF8D6700A63D9E /* ContentViewModel.swift in Sources */,
 				742278FD27D9DA450073A37D /* BusArrivalApi.swift in Sources */,
@@ -313,7 +317,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"GPS_TEST/Preview Content\"";
-				DEVELOPMENT_TEAM = F7UA3KLRD7;
+				DEVELOPMENT_TEAM = 585DJW5GVL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = GPS_TEST/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -335,7 +339,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"GPS_TEST/Preview Content\"";
-				DEVELOPMENT_TEAM = F7UA3KLRD7;
+				DEVELOPMENT_TEAM = 585DJW5GVL;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = GPS_TEST/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
