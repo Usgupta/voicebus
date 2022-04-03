@@ -95,6 +95,9 @@ class SpeechRecognizer: ObservableObject{
     
     func transcribe() {
         
+        self.task?.cancel()
+        self.task?.finish()
+        
         print("transribe invoked")
         
         

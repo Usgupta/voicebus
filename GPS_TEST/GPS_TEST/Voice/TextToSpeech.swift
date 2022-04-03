@@ -16,6 +16,7 @@
 //import Foundation
 //import AVKit
 import AVFoundation
+import SwiftUI
 
 protocol CanSpeakDelegate {
    func speechDidFinish()
@@ -56,7 +57,6 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
        
    }
 }
-
 class TextToAudio: NSObject, CanSpeakDelegate {
     
     var speechRecognizer = SpeechRecognizer()
@@ -106,13 +106,17 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             
             print("transcript to be stopped 5 secs are finished")
             print(self.speechRecognizer.transcript)
+            
+            let isValidBusNo: Int? = Int(self.speechRecognizer.transcript)
+            
+            if(isValidBusNo == nil){
+                print("invalid input, pls press the button and try again")//speak this using texttoaudio and dont call bus api
+            }
+            
             self.busservices.append(self.speechRecognizer.transcript)
             print(self.busservices, "bus no array")
+            self.speechRecognizer.task?.finish()
             self.speechRecognizer.reset()
-            
-           
-            
-
         })
         
         print("outside timer loop")
@@ -136,9 +140,9 @@ class TextToAudio: NSObject, CanSpeakDelegate {
        
        if(verifybusstopbutton == false){
            
-        
-
+           self.speechRecognizer.task?.finish()
            self.speechRecognizer.reset()
+          
            DispatchQueue.main.async {
                self.speechRecognizer.transcribe()
                self.WaitSpeechtoFinishTimer()
