@@ -77,45 +77,12 @@ class SpeechRecognizer: ObservableObject{
         Creates a `SFSpeechRecognitionTask` that transcribes speech to text until you call `stopTranscribing()`.
         The resulting transcription is continuously written to the published `transcript` property.
      */
-    
-    var timer = Timer.init()
-    
-    
-    func restartSpeechTimer() {
-        timer.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: false, block: { (timer) in
-        print("timer over")
-        self.task?.cancel()
-        self.stopTranscribing()
-//        self.timerover = true
-
-            // Do whatever needs to be done when the timer expires
-        })
-    }
-    
-    func transcribe() {
         
-        self.task?.cancel()
-        self.task?.finish()
+    func transcribe() {
+//        self.task?.cancel()
+//        self.task?.finish()
         
         print("transribe invoked")
-        
-        
-//
-//        guard let recognizer = self.recognizer, recognizer.isAvailable else {
-//
-//            self.speakError(RecognizerError.recognizerIsUnavailable)
-//
-//         }
-//
-        
-        
-        
-//        DispatchQueue.main.async{ [weak self] in
-//            guard let self = self, let recognizer = self.recognizer, recognizer.isAvailable else {
-//                self?.speakError(RecognizerError.recognizerIsUnavailable)
-//                return
-//            }
 
         DispatchQueue.main.async { [weak self] in
             guard let self = self, let recognizer = self.recognizer, recognizer.isAvailable else {
@@ -124,12 +91,7 @@ class SpeechRecognizer: ObservableObject{
                 return
             }
             
-          
-            
-            
             do {
-                
-     
                 let (audioEngine, request) = try
                 SpeechRecognizer.prepareEngine()
                 
@@ -140,14 +102,14 @@ class SpeechRecognizer: ObservableObject{
                                     
                     let receivedFinalResult = result?.isFinal ?? false
                     let receivedError = error != nil
-
-                    var isFinal = false
                    
                     print("checkpt1")
 
                     if receivedFinalResult || receivedError {
+                        
                         print("checkpt2 received final res", receivedFinalResult)
-                        print("rec error", receivedError, "error ", error)
+                        print("rec error", receivedError, "error ", error!)
+                        print(self.task?.state)
                         audioEngine.stop()
                         audioEngine.inputNode.removeTap(onBus: 0)
                     }
@@ -155,36 +117,9 @@ class SpeechRecognizer: ObservableObject{
                     if let result = result {
                         
                         self.speak(result.bestTranscription.formattedString)
-                        isFinal = result.isFinal
                         
                         print("i heard this ",result.bestTranscription.formattedString)
                     }
-                    
-//                    typealias dispatch_queue_serial_t = OS_dispatch_queue_serial
-
-//                    self.count+=1
-//
-//                    if(self.count==5){
-//                        self.count = 1
-//                        print("we are stopping")
-//                        print(result?.bestTranscription.formattedString)
-//
-//                        self.reset()
-//
-//                    }
-                    
-                    
-                    
-
-//                    if isFinal {
-//                            self.stopTranscribing()
-//                        }
-//                    else if error == nil {
-//                        self.restartSpeechTimer()
-//                        self.task?.cancel()
-//                    }
-//                         this is where the message of the transcript is stored can get the result from here to the screen,
-                
                     
                      print("checkpt4")
                     

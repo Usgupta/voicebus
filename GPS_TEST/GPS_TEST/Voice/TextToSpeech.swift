@@ -65,13 +65,17 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     var verifybusstopbutton = false
     
-    var popupspeak = false
+    var isValidBusNo = false // to check if the transcript obtained is a bus number
+    
+    var BusNoExists = true //to check if the requested bus number exists for the bus stop
+    
+    var callpopup = true // to check whether to launch the popup or not
+    
+    var popupspeak = false // to check if we have to execute text to audio for speaking the content on the popup
     
     var timer = Timer.init()
     
     var busservices: [String] = []
-    
-    
     
     let canSpeak = CanSpeak()
     
@@ -81,9 +85,18 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     let sysvoice = AVSpeechSynthesisVoice(language: "en-GB")
     
+    let TTSques = ["BusNo":"What bus number are you waiting for? Pause for a few seconds before speaking your answer","AnotherBus":"Would you like to enter another Bus? Pause for a few seconds and answer as Yes or No","PeriodicUpdates": "Would you like to be periodically notified of your desired bus arrival timings, Pause for a few seconds and answer as Yes or No"]
+    
     override init() {
         super.init()
         self.canSpeak.delegate = self
+        self.voicereply = ""
+        self.isValidBusNo = false
+        self.BusNoExists = true
+        self.callpopup = true
+        self.busservices = []
+        self.speechRecognizer = SpeechRecognizer()
+        
         
     }
     
@@ -107,15 +120,26 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             print("transcript to be stopped 5 secs are finished")
             print(self.speechRecognizer.transcript)
             
-            let isValidBusNo: Int? = Int(self.speechRecognizer.transcript)
+            let ValidBusNo: Int? = Int(self.speechRecognizer.transcript)
             
-            if(isValidBusNo == nil){
+            if(ValidBusNo == nil){
                 print("invalid input, pls press the button and try again")//speak this using texttoaudio and dont call bus api
+                
+                self.callpopup = false
+                
             }
             
-            self.busservices.append(self.speechRecognizer.transcript)
-            print(self.busservices, "bus no array")
-            self.speechRecognizer.task?.finish()
+            else{
+                
+                self.isValidBusNo = true
+                
+                self.busservices.append(self.speechRecognizer.transcript)
+                print(self.busservices, " bus no array")
+                
+            }
+            
+            
+//            self.speechRecognizer.task?.finish()
             self.speechRecognizer.reset()
         })
         
@@ -133,17 +157,21 @@ class TextToAudio: NSObject, CanSpeakDelegate {
        
        if (popupspeak == true){
            
-           //invoke check bus timing functon
+        // dont execute speech recognition
            
        }
        
-       
        if(verifybusstopbutton == false){
            
-           self.speechRecognizer.task?.finish()
-           self.speechRecognizer.reset()
-          
+           self.busservices = []
+           
            DispatchQueue.main.async {
+               
+               
+               print(self.speechRecognizer.task?.state)
+//               self.speechRecognizer.task?.finish()
+//               self.speechRecognizer.reset()
+               self.speechRecognizer = SpeechRecognizer()
                self.speechRecognizer.transcribe()
                self.WaitSpeechtoFinishTimer()
 

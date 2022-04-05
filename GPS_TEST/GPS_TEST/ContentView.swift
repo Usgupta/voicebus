@@ -176,10 +176,11 @@ struct ContentView: View {
                 // Bus Service
                 Button {
                     
-                    DispatchQueue.main.async {
-                        
-                        texttoaudio.canSpeak.sayThis("What bus number are you waiting for")
+//
                     
+                    DispatchQueue.main.async {
+                        texttoaudio = TextToAudio()
+                        texttoaudio.canSpeak.sayThis(texttoaudio.TTSques["BusNo"]!)
                     }
                     
                     BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.texttoaudio.busservices) { item in
