@@ -83,7 +83,7 @@ class BusStopApi: ObservableObject {
 //        }
         
         // setup
-        var nearestBusStop: String = "nil"
+        var nearestBusStop: String = "96351" //nil
         var minDist = CLLocationDistance(3000)
         
         // caluclation

@@ -61,7 +61,26 @@ struct ContentView: View {
     
     // BusArrival
     @State private var busArrivalResponses = BusArrivalInfo(metadata: "", busStopCode: "", services: [])
-    @State private var busTimings = "not yet retrieved from api"
+    @State private var busTimings = "not yet retrieved from api .."
+//    {
+//        didSet {
+//            let stringArr = self.busTimings.components(separatedBy: " ")
+//            if stringArr.count > 5 {
+//
+//                print(self.busTimings)
+//                print(stringArr)
+//                switch(stringArr[4]) {
+//
+//                case "5", "3", "0": // 5min, 3min, 0min
+//                    showPopup = true
+//                default:
+//                    // do nothing
+//                    showPopup = false
+//
+//                }
+//            }
+//        }
+//    }
     @State private var busServices = ["20"] //["9", "10"]
     
     // BusStop
@@ -225,12 +244,15 @@ struct ContentView: View {
                 // Bus Service
                 Button {
                     
+                    // remove this pls
+                    showPopup = true
 //
                     
                     DispatchQueue.main.async {
                         texttoaudio = TextToAudio()
                         texttoaudio.canSpeak.sayThis(texttoaudio.TTSques["BusNo"]!)
                     }
+                    
                     
                     BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.texttoaudio.busservices) { item in
         //                self.busArrivalResponses = item
@@ -242,6 +264,7 @@ struct ContentView: View {
                         for svc in self.texttoaudio.busservices {
                             self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
                         }
+                        
                     }
                     
                    
@@ -283,8 +306,10 @@ struct ContentView: View {
                         for svc in self.texttoaudio.busservices {
                             self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
                         }
+                        showPopup = true
                     }
                 }
+                
     //            Text(self.busTimings)
                 
 //                Spacer()
@@ -330,6 +355,22 @@ struct ContentView: View {
             
         Spacer()
 
+        }
+        //POP UP IF APP ACTIVE
+        .popup(isPresented: $showPopup, with: $busTimings) { item in
+            VStack(spacing: 20) {
+                Text(self.busTimings)
+//                TextField("Name", text: self.$busTimings)
+                Button {
+                    showPopup = false
+                } label: {
+                    Text("Dismiss Popup")
+                }
+            }
+            .frame(width: 300)
+            .padding()
+            .background(Color.gray)
+            .cornerRadius(8)
         }
     }
 }
