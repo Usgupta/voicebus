@@ -44,6 +44,9 @@ extension View {
 
 struct ContentView: View {
     
+    @State private var isShowingDetailView = false
+    
+    
     @State private var isRecording = false
         
     @State var texttoaudio = TextToAudio()
@@ -89,6 +92,7 @@ struct ContentView: View {
     
     
     var body: some View {
+        NavigationView{
 //        Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
 //            .ignoresSafeArea()
 //            .accentColor(Color(.systemPink))
@@ -121,6 +125,7 @@ struct ContentView: View {
                 Spacer()
                 
                 // Bus Stop
+                NavigationLink(destination: DetailView(choice: "Heads"), isActive: $isShowingDetailView) {}
                 Button {
                     
                     
@@ -133,6 +138,29 @@ struct ContentView: View {
                     texttoaudio.canSpeak.sayThis("Based on your current location, you are currently at \(self.busStopCode)")
                                     
                     print("done speaking")
+                    self.isShowingDetailView = true
+                    
+                    
+//                    // IF APP ACTIVE
+//                    feedback.prepare()
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//                        showPopup = true
+//                        feedback.notificationOccurred(.success)
+//                    }
+//                     // IF APP INACTIVE/ background
+//                     let content = UNMutableNotificationContent()
+//                     content.title = "Your Bus is Arriving!"
+//                     content.subtitle = self.busTimings
+//                     content.sound = UNNotificationSound.default //plays sound
+//                     feedback.notificationOccurred(.success) //vibrates buzz
+//                     // show this notification five seconds from now
+//                     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+//                     // choose a random identifier
+//                     let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+//                     // add our notification request
+//                     UNUserNotificationCenter.current().add(request)
+                    
+                    
                     
                 } label: {
                     VStack {
@@ -152,6 +180,21 @@ struct ContentView: View {
                     .background(Color(red: 49/255, green: 46/255, blue: 76/255, opacity: 1.0))
                     
                 }
+                //POP UP IF APP ACTIVE
+//                .popup(isPresented: $showPopup, with: $busTimings) { item in
+//                    VStack(spacing: 20) {
+//                        TextField("Name", text: self.$busTimings)
+//                        Button {
+//                            showPopup = false
+//                        } label: {
+//                            Text("Dismiss Popup")
+//                        }
+//                    }
+//                    .frame(width: 300)
+//                    .padding()
+//                    .background(Color.gray)
+//                    .cornerRadius(8)
+//                }
                 .cornerRadius(10)
                 .shadow(radius: 20)
                 .onAppear {
@@ -234,45 +277,46 @@ struct ContentView: View {
             }
         }
         
-        
         // Pop up & slide in notification here
-        Button("Schedule Notification") {
-           // IF APP ACTIVE
-           feedback.prepare()
-           DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-               showPopup = true
-               feedback.notificationOccurred(.success)
-           }
-            // IF APP INACTIVE/ background
-            let content = UNMutableNotificationContent()
-            content.title = "Your Bus is Arriving!"
-            content.subtitle = self.busTimings
-            content.sound = UNNotificationSound.default //plays sound
-            feedback.notificationOccurred(.success) //vibrates buzz
-            // show this notification five seconds from now
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-            // choose a random identifier
-            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-            // add our notification request
-            UNUserNotificationCenter.current().add(request)
-        }
+//        Button("Schedule Notification") {
+//           // IF APP ACTIVE
+//           feedback.prepare()
+//           DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//               showPopup = true
+//               feedback.notificationOccurred(.success)
+//           }
+//            // IF APP INACTIVE/ background
+//            let content = UNMutableNotificationContent()
+//            content.title = "Your Bus is Arriving!"
+//            content.subtitle = self.busTimings
+//            content.sound = UNNotificationSound.default //plays sound
+//            feedback.notificationOccurred(.success) //vibrates buzz
+//            // show this notification five seconds from now
+//            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+//            // choose a random identifier
+//            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+//            // add our notification request
+//            UNUserNotificationCenter.current().add(request)
+//        }
         //POP UP IF APP ACTIVE
-        .popup(isPresented: $showPopup, with: $busTimings) { item in
-            VStack(spacing: 20) {
-                TextField("Name", text: self.$busTimings)
-                Button {
-                    showPopup = false
-                } label: {
-                    Text("Dismiss Popup")
-                }
-            }
-            .frame(width: 300)
-            .padding()
-            .background(Color.gray)
-            .cornerRadius(8)
-        }
+//        .popup(isPresented: $showPopup, with: $busTimings) { item in
+//            VStack(spacing: 20) {
+//                TextField("Name", text: self.$busTimings)
+//                Button {
+//                    showPopup = false
+//                } label: {
+//                    Text("Dismiss Popup")
+//                }
+//            }
+//            .frame(width: 300)
+//            .padding()
+//            .background(Color.gray)
+//            .cornerRadius(8)
+//        }
+            
         Spacer()
 
+        }
     }
 }
 
