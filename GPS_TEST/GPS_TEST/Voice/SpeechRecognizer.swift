@@ -137,6 +137,7 @@ class SpeechRecognizer: ObservableObject{
     /// Stop transcribing audio.
     func stopTranscribing() {
         
+        
         reset()
         
     }
@@ -146,6 +147,7 @@ class SpeechRecognizer: ObservableObject{
         task?.cancel()
         audioEngine?.stop()
         audioEngine = nil
+        request?.endAudio()
         request = nil
         task = nil
     }

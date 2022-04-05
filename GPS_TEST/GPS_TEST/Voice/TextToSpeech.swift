@@ -44,14 +44,27 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
     
     func sayThis(_ phrase: String){
         
+        print("say this func beg")
+        
         let utterance = AVSpeechUtterance(string: phrase)
         utterance.voice = voiceToUse
         utterance.rate = 0.5
         voiceSynth.speak(utterance)
         
+        print("speaking completed")
+        
+        do{
+            let _ = try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
+                                                                    options: .duckOthers)
+          }catch{
+              print(error)
+          }
+        
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        
+        print("speech synthesizer func invoked")
         
         self.delegate.speechDidFinish()
        
@@ -88,6 +101,9 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     let TTSques = ["BusNo":"What bus number are you waiting for? Pause for a few seconds before speaking your answer","AnotherBus":"Would you like to enter another Bus? Pause for a few seconds and answer as Yes or No","PeriodicUpdates": "Would you like to be periodically notified of your desired bus arrival timings, Pause for a few seconds and answer as Yes or No"]
     
     override init() {
+        
+        print("i am initialising text to speech")
+        
         super.init()
         self.canSpeak.delegate = self
         self.voicereply = ""
@@ -95,7 +111,13 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         self.BusNoExists = true
         self.callpopup = true
         self.busservices = []
+        
+        print("init speechrecog obj")
+        
         self.speechRecognizer = SpeechRecognizer()
+        
+        
+        print("done init tts")
         
         
     }
@@ -170,8 +192,8 @@ class TextToAudio: NSObject, CanSpeakDelegate {
                
                print(self.speechRecognizer.task?.state)
 //               self.speechRecognizer.task?.finish()
-//               self.speechRecognizer.reset()
-               self.speechRecognizer = SpeechRecognizer()
+               self.speechRecognizer.reset()
+//               self.speechRecognizer = SpeechRecognizer()
                self.speechRecognizer.transcribe()
                self.WaitSpeechtoFinishTimer()
 

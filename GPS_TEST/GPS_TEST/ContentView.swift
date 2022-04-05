@@ -92,7 +92,7 @@ struct ContentView: View {
     
     
     var body: some View {
-        NavigationView{
+//        NavigationView{
 //        Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
 //            .ignoresSafeArea()
 //            .accentColor(Color(.systemPink))
@@ -125,10 +125,8 @@ struct ContentView: View {
                 Spacer()
                 
                 // Bus Stop
-                NavigationLink(destination: DetailView(choice: "Heads"), isActive: $isShowingDetailView) {}
+//                NavigationLink(destination: DetailView(choice: "Heads"), isActive: $isShowingDetailView) {}
                 Button {
-                    
-                    
                     self.busStopCode = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
                     
                     
@@ -163,21 +161,30 @@ struct ContentView: View {
                     
                     
                 } label: {
-                    VStack {
-                        Image(systemName: "mappin.and.ellipse")
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                            .padding(20)
-                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
-                        Text("VERIFY\nBUS STOP")
-                            .fontWeight(.bold)
-                            .multilineTextAlignment(.center)
-                            .font(.system(size: 36))
-                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                    GeometryReader { geo in
+                        HStack {
+                            Spacer()
+                            VStack {
+                                Spacer()
+                                Image(systemName: "mappin.and.ellipse")
+                                    .resizable()
+                                    .frame(width: geo.size.width*0.18, height: geo.size.width*0.18)
+                                    .padding(.bottom, 10)
+                                    .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                                Text("VERIFY\nBUS STOP")
+                                    .fontWeight(.bold)
+                                    .multilineTextAlignment(.center)
+                                    .font(.system(size: geo.size.width*0.1))
+                                    .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                                Spacer()
+                            }
+                            .frame(width: geo.size.width*0.9, height: geo.size.height*0.9)
+                            .background(Color(red: 49/255, green: 46/255, blue: 76/255, opacity: 1.0))
+                            .cornerRadius(10)
+                            Spacer()
+                        }
+                        .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY)
                     }
-                    .padding([.leading, .trailing], 80)
-                    .padding([.top, .bottom], 70)
-                    .background(Color(red: 49/255, green: 46/255, blue: 76/255, opacity: 1.0))
                     
                 }
                 //POP UP IF APP ACTIVE
@@ -195,7 +202,6 @@ struct ContentView: View {
 //                    .background(Color.gray)
 //                    .cornerRadius(8)
 //                }
-                .cornerRadius(10)
                 .shadow(radius: 20)
                 .onAppear {
                     // GPS
@@ -240,24 +246,31 @@ struct ContentView: View {
                     
                    
                 } label: {
-                    VStack {
-                        Image(systemName: "clock.fill")
-                            .resizable()
-                            .frame(width: 60, height: 60)
-                            .padding(20)
-                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
-                        Text("VERIFY\nBUS TIME")
-                            .fontWeight(.bold)
-                            .multilineTextAlignment(.center)
-                            .font(.system(size: 36))
-                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                    GeometryReader { geo in
+                        HStack {
+                            Spacer()
+                            VStack {
+                                Spacer()
+                                Image(systemName: "clock.fill")
+                                    .resizable()
+                                    .frame(width: geo.size.width*0.18, height: geo.size.width*0.18)
+                                    .padding(.bottom, 10)
+                                    .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                                Text("VERIFY\nBUS TIME")
+                                    .fontWeight(.bold)
+                                    .multilineTextAlignment(.center)
+                                    .font(.system(size: geo.size.width*0.1))
+                                    .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                                Spacer()
+                            }
+                            .frame(width: geo.size.width*0.9, height: geo.size.height*0.9)
+                            .background(Color(red: 49/255, green: 46/255, blue: 76/255, opacity: 1.0))
+                            .cornerRadius(10)
+                            Spacer()
+                        }
+                        .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY)
                     }
-                    .padding([.leading, .trailing], 86)
-                    .padding([.top, .bottom], 70)
-                    .background(Color(red: 49/255, green: 46/255, blue: 76/255, opacity: 1.0))
-                    
                 }
-                .cornerRadius(10)
                 .shadow(radius: 20)
                 .onReceive(timer) { input in
                     BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.texttoaudio.busservices) { item in
@@ -274,8 +287,8 @@ struct ContentView: View {
                 }
     //            Text(self.busTimings)
                 
-                Spacer()
-            }
+//                Spacer()
+//            }
         }
         
         // Pop up & slide in notification here
