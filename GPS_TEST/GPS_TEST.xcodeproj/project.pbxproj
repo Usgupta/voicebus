@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0102093B27FCA90400E1E959 /* VoiceBus_AppLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0102093A27FCA90400E1E959 /* VoiceBus_AppLogo.png */; };
 		012B915427F30021000226D4 /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012B915327F30021000226D4 /* SpeechRecognizer.swift */; };
 		012B915627F3004E000226D4 /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012B915527F3004E000226D4 /* TextToSpeech.swift */; };
-		0170AC5927FC0F1000B5C33D /* Voice_Bus_App_Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0170AC5827FC0F0F00B5C33D /* Voice_Bus_App_Logo.png */; };
 		3DC0414027FBDA0B00E367E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC0413F27FBDA0B00E367E5 /* ContentView.swift */; };
 		3DC0414227FBDA1800E367E5 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC0414127FBDA1800E367E5 /* DetailView.swift */; };
 		742278FD27D9DA450073A37D /* BusArrivalApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742278FC27D9DA450073A37D /* BusArrivalApi.swift */; };
@@ -24,9 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0102093A27FCA90400E1E959 /* VoiceBus_AppLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VoiceBus_AppLogo.png; sourceTree = "<group>"; };
 		012B915327F30021000226D4 /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		012B915527F3004E000226D4 /* TextToSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
-		0170AC5827FC0F0F00B5C33D /* Voice_Bus_App_Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Voice_Bus_App_Logo.png; sourceTree = "<group>"; };
 		3DC0413F27FBDA0B00E367E5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3DC0414127FBDA1800E367E5 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		742278FC27D9DA450073A37D /* BusArrivalApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusArrivalApi.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 				012B915227F2FFEE000226D4 /* Voice */,
 				749B213227BF86C900A63D9E /* Assets.xcassets */,
 				749B213727BF86C900A63D9E /* Info.plist */,
-				0170AC5827FC0F0F00B5C33D /* Voice_Bus_App_Logo.png */,
+				0102093A27FCA90400E1E959 /* VoiceBus_AppLogo.png */,
 				749B213427BF86C900A63D9E /* Preview Content */,
 			);
 			path = GPS_TEST;
@@ -188,8 +188,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0170AC5927FC0F1000B5C33D /* Voice_Bus_App_Logo.png in Resources */,
 				749B213627BF86C900A63D9E /* Preview Assets.xcassets in Resources */,
+				0102093B27FCA90400E1E959 /* VoiceBus_AppLogo.png in Resources */,
 				749B213327BF86C900A63D9E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
