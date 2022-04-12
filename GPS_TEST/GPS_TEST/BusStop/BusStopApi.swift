@@ -83,8 +83,8 @@ class BusStopApi: ObservableObject {
 //        }
         
         // setup
-        var nearestBusStop: String = "96351" //nil
-        var minDist = CLLocationDistance(3000)
+        var nearestBusStop: String = "nil" //nil
+        var minDist = CLLocationDistance(10000)
         
         // caluclation
         print("calculating nearest bus stop...")
@@ -100,7 +100,7 @@ class BusStopApi: ObservableObject {
             
             if distanceInMeters < minDist {
                 minDist = distanceInMeters
-                nearestBusStop = busStop.busStopCode
+                nearestBusStop = busStop.busStopCode + " " + busStop.roadName
             }
 //            print("minDist: \(minDist)")
 //            print("nearestBusStop: \(nearestBusStop)")

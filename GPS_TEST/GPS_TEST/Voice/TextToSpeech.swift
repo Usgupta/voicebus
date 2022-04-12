@@ -30,6 +30,8 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
     
    
     
+   
+    
     var delegate: CanSpeakDelegate!
     
     override init(){
@@ -43,6 +45,7 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
     }
     
     func sayThis(_ phrase: String){
+        
         
         print("say this func beg")
         
@@ -73,6 +76,15 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
 class TextToAudio: NSObject, CanSpeakDelegate {
     
     var speechRecognizer = SpeechRecognizer()
+    
+    var busStopCode = "not yet retrieved from bus api"
+    var busTimings = "not yet retrieved from bus api"
+    
+//    var showPopup: Binding<Bool>
+//    @Published var showPopup: Bool = false
+    
+//    var showPopup = false
+    
     
     var isfinished = false
     
@@ -111,10 +123,14 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         self.BusNoExists = true
         self.callpopup = true
         self.busservices = []
+//        self.showPopup = false
+       
+        
+//        self.busStopCode = ""
         
         print("init speechrecog obj")
         
-        self.speechRecognizer = SpeechRecognizer()
+//        self.speechRecognizer = SpeechRecognizer()
         
         
         print("done init tts")
@@ -161,11 +177,38 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             }
             
             
+            
 //            self.speechRecognizer.task?.finish()
             self.speechRecognizer.reset()
+            
+            print("bus stop api is being invoked")
+            print(self.busStopCode," bus stop code b4 bus api")
+            
+            BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.busservices) { item in
+                  //                self.busArrivalResponses = item
+                  //                self.busSvcNum = item.services[0].svcNum
+
+                self.busTimings = ""
+                print("inside bus api printing item",item)
+                
+                
+
+                  for svc in self.busservices {
+                      self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
+                  }
+
+            }
+            
+            print("setting popup cond to true")
+            
+//            self.showPopup = true
+            
+                              
+            
         })
         
         print("outside timer loop")
+        
     }
     
     
@@ -190,7 +233,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
            DispatchQueue.main.async {
                
                
-               print(self.speechRecognizer.task?.state)
+//               print(self.speechRecognizer.task?.state)
 //               self.speechRecognizer.task?.finish()
                self.speechRecognizer.reset()
 //               self.speechRecognizer = SpeechRecognizer()
