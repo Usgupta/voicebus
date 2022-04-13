@@ -113,6 +113,28 @@ struct ContentView: View {
 //
     
     
+    fileprivate func verifyBusStopbuttonTapped() {
+        //                    self.busStopCode = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
+        
+        let replyMsg = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
+        var replyArr = replyMsg.components(separatedBy: " ")
+        
+        
+        
+        self.texttoaudio.busStopCode = replyArr[0]
+        replyArr.remove(at: 0)
+        let busStopName = replyArr.joined()
+        
+        
+        
+        texttoaudio.verifybusstopbutton = true
+        
+        texttoaudio.canSpeak.sayThis("Based on your current location, you are currently at \(busStopName)")
+        
+        print("done speaking")
+        self.isShowingDetailView = true
+    }
+    
     var body: some View {
 //        NavigationView{
 //        Map(coordinateRegion: $viewModel.region, showsUserLocation: true)
@@ -150,25 +172,7 @@ struct ContentView: View {
                     // Bus Stop
                     //                NavigationLink(destination: DetailView(choice: "Heads"), isActive: $isShowingDetailView) {}
                     Button {
-                        //                    self.busStopCode = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
-                        
-                        let replyMsg = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
-                        var replyArr = replyMsg.components(separatedBy: " ")
-                        
-                        
-                        
-                        self.texttoaudio.busStopCode = replyArr[0]
-                        replyArr.remove(at: 0)
-                        let busStopName = replyArr.joined()
-                        
-                        
-                        
-                        texttoaudio.verifybusstopbutton = true
-                        
-                        texttoaudio.canSpeak.sayThis("Based on your current location, you are currently at \(busStopName)")
-                        
-                        print("done speaking")
-                        self.isShowingDetailView = true
+                        verifyBusStopbuttonTapped()
                         
                         
                         //                    // IF APP ACTIVE
@@ -219,7 +223,8 @@ struct ContentView: View {
                         }
                         
                         
-                    }.accessibilityLabel("Press to check your nearest bus stop")
+                    }
+                    .accessibilityLabel("Press to check your nearest bus stop")
                     //POP UP IF APP ACTIVE
                     //                .popup(isPresented: $showPopup, with: $busTimings) { item in
                     //                    VStack(spacing: 20) {
@@ -258,6 +263,13 @@ struct ContentView: View {
                     //        Text("Nearest bus stop is: \(busStopCode)")
                     
                     Spacer()
+                    if (showPopup) {
+                        Text(self.texttoaudio.busTimings)
+                            .font(.largeTitle)
+                            .foregroundColor(.white)
+                            .padding()
+                        Spacer()
+                    }
                     
                     // Bus Service
                     Button {
@@ -375,21 +387,21 @@ struct ContentView: View {
                 
             }
             //POP UP IF APP ACTIVE
-            .popup(isPresented: self.$showPopup, with: self.$texttoaudio.busTimings) { item in
-                VStack(spacing: 20) {
-                    Text(self.texttoaudio.busTimings)
-                    //                TextField("Name", text: self.$busTimings)
-                    Button {
-                        self.showPopup = false
-                    } label: {
-                        Text("Dismiss Popup")
-                    }
-                }
-                .frame(width: 300)
-                .padding()
-                .background(Color.gray)
-                .cornerRadius(8)
-            }
+//            .popup(isPresented: self.$showPopup, with: self.$texttoaudio.busTimings) { item in
+//                VStack(spacing: 20) {
+//                    Text(self.texttoaudio.busTimings)
+//                    //                TextField("Name", text: self.$busTimings)
+//                    Button {
+//                        self.showPopup = false
+//                    } label: {
+//                        Text("Dismiss Popup")
+//                    }
+//                }
+//                .frame(width: 300)
+//                .padding()
+//                .background(Color.gray)
+//                .cornerRadius(8)
+//            }
         } else {
             // Fallback on earlier versions
         }
