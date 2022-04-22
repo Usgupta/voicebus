@@ -133,6 +133,66 @@ struct ContentView: View {
         
         print("done speaking")
         self.isShowingDetailView = true
+        
+        //                    // IF APP ACTIVE
+        //                    feedback.prepare()
+        //                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        //                        showPopup = true
+        //                        feedback.notificationOccurred(.success)
+        //                    }
+        //                     // IF APP INACTIVE/ background
+        //                     let content = UNMutableNotificationContent()
+        //                     content.title = "Your Bus is Arriving!"
+        //                     content.subtitle = self.busTimings
+        //                     content.sound = UNNotificationSound.default //plays sound
+        //                     feedback.notificationOccurred(.success) //vibrates buzz
+        //                     // show this notification five seconds from now
+        //                     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
+        //                     // choose a random identifier
+        //                     let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        //                     // add our notification request
+        //                     UNUserNotificationCenter.current().add(request)
+        
+    }
+    
+    fileprivate func VerifyBusTimingTapped() {
+        // remove this pls
+        //                    self.texttoaudio.showPopup = true
+        //
+        
+        DispatchQueue.main.async {
+            //                        texttoaudio = TextToAudio()
+            texttoaudio.canSpeak.sayThis(texttoaudio.TTSques["BusNo"]!)
+        }
+        
+        
+        BusArrivalApi().loadData(busStopCode: self.texttoaudio.busStopCode, busServices: self.texttoaudio.busservices) { item in
+            //                self.busArrivalResponses = item
+            //                self.busSvcNum = item.services[0].svcNum
+            
+            self.texttoaudio.busTimings = ""
+            print(item)
+            
+            for svc in self.texttoaudio.busservices {
+                self.texttoaudio.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
+            }
+            
+        }
+    }
+    
+    fileprivate func BusTimingFromApi() {
+        BusArrivalApi().loadData(busStopCode: self.texttoaudio.busStopCode, busServices: self.texttoaudio.busservices) { item in
+            //                self.busArrivalResponses = item
+            //                self.busSvcNum = item.services[0].svcNum
+            
+            self.texttoaudio.busTimings = ""
+            print(item)
+            
+            for svc in self.texttoaudio.busservices {
+                self.texttoaudio.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
+            }
+            self.showPopup = true
+        }
     }
     
     var body: some View {
@@ -173,28 +233,6 @@ struct ContentView: View {
                     //                NavigationLink(destination: DetailView(choice: "Heads"), isActive: $isShowingDetailView) {}
                     Button {
                         verifyBusStopbuttonTapped()
-                        
-                        
-                        //                    // IF APP ACTIVE
-                        //                    feedback.prepare()
-                        //                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        //                        showPopup = true
-                        //                        feedback.notificationOccurred(.success)
-                        //                    }
-                        //                     // IF APP INACTIVE/ background
-                        //                     let content = UNMutableNotificationContent()
-                        //                     content.title = "Your Bus is Arriving!"
-                        //                     content.subtitle = self.busTimings
-                        //                     content.sound = UNNotificationSound.default //plays sound
-                        //                     feedback.notificationOccurred(.success) //vibrates buzz
-                        //                     // show this notification five seconds from now
-                        //                     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-                        //                     // choose a random identifier
-                        //                     let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                        //                     // add our notification request
-                        //                     UNUserNotificationCenter.current().add(request)
-                        
-                        
                         
                     } label: {
                         GeometryReader { geo in
@@ -274,28 +312,7 @@ struct ContentView: View {
                     // Bus Service
                     Button {
                         
-                        // remove this pls
-                        //                    self.texttoaudio.showPopup = true
-                        //
-                        
-                        DispatchQueue.main.async {
-                            //                        texttoaudio = TextToAudio()
-                            texttoaudio.canSpeak.sayThis(texttoaudio.TTSques["BusNo"]!)
-                        }
-                        
-                        
-                        BusArrivalApi().loadData(busStopCode: self.texttoaudio.busStopCode, busServices: self.texttoaudio.busservices) { item in
-                            //                self.busArrivalResponses = item
-                            //                self.busSvcNum = item.services[0].svcNum
-                            
-                            self.texttoaudio.busTimings = ""
-                            print(item)
-                            
-                            for svc in self.texttoaudio.busservices {
-                                self.texttoaudio.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
-                            }
-                            
-                        }
+                        VerifyBusTimingTapped()
                         
                         
                     } label: {
@@ -326,18 +343,7 @@ struct ContentView: View {
                     }.accessibilityLabel("Press to check the arrival timing of a Bus")
                         .shadow(radius: 20)
                         .onReceive(timer) { input in
-                            BusArrivalApi().loadData(busStopCode: self.texttoaudio.busStopCode, busServices: self.texttoaudio.busservices) { item in
-                                //                self.busArrivalResponses = item
-                                //                self.busSvcNum = item.services[0].svcNum
-                                
-                                self.texttoaudio.busTimings = ""
-                                print(item)
-                                
-                                for svc in self.texttoaudio.busservices {
-                                    self.texttoaudio.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
-                                }
-                                self.showPopup = true
-                            }
+                            BusTimingFromApi()
                         }
                     
                     //            Text(self.busTimings)
