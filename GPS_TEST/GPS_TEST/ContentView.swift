@@ -309,6 +309,14 @@ struct ContentView: View {
                         Spacer()
                     }
                     
+                    Text("wait a few seconds before speaking...") //self.texttoaudio.busservices
+                        .fontWeight(.bold)
+                        .font(.largeTitle)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                    
+                    
+                    
                     // Bus Service
                     Button {
                         
