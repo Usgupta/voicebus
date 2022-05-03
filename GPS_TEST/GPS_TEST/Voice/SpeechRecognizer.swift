@@ -108,8 +108,8 @@ class SpeechRecognizer: ObservableObject{
                     if receivedFinalResult || receivedError {
                         
                         print("checkpt2 received final res", receivedFinalResult)
-                        print("rec error", receivedError, "error ", error!)
-                        print(self.task?.state)
+//                        print("rec error", receivedError, "error ", error!)
+//                        print(self.task?.state)
                         audioEngine.stop()
                         audioEngine.inputNode.removeTap(onBus: 0)
                     }

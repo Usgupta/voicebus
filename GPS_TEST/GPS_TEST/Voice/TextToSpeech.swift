@@ -38,6 +38,7 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
         
         super.init()
         
+        
         voiceToUse = AVSpeechSynthesisVoice.speechVoices().filter({ $0.name == "Karen" }).first
         
         self.voiceSynth.delegate = self
@@ -78,7 +79,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     var speechRecognizer = SpeechRecognizer()
     
     var busStopCode = "not yet retrieved from bus api"
-    var busTimings = "not yet retrieved from bus api"
+    var busTimings = "NIL"
     
 //    var showPopup: Binding<Bool>
 //    @Published var showPopup: Bool = false
@@ -122,7 +123,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         self.isValidBusNo = false
         self.BusNoExists = true
         self.callpopup = true
-        self.busservices = []
+        self.busservices = ["NIL"]
 //        self.showPopup = false
        
         
@@ -177,9 +178,21 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             }
             
             
-            
-//            self.speechRecognizer.task?.finish()
+            print("destriying speech")
             self.speechRecognizer.reset()
+            self.speechRecognizer.task?.finish()
+            self.speechRecognizer.task?.cancel()
+            
+            print("redoing audio")
+            
+            do{
+                let _ = try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
+                                                                        options: .duckOthers)
+              }catch{
+                  print(error)
+              }
+            
+      
             
             print("bus stop api is being invoked")
             print(self.busStopCode," bus stop code b4 bus api")
