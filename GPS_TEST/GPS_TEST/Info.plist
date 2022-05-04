@@ -40,9 +40,9 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app needs location service to check nearby bus stops.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>allow microphone pls</string>
+	<string>This app uses microphone to listen to your input. </string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>allow me to hear u pls</string>
+	<string>This app uses speech recognition to process your voice input</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

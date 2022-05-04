@@ -165,7 +165,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 749B212627BF86C400A63D9E /* Build configuration list for PBXProject "GPS_TEST" */;
+			buildConfigurationList = 749B212627BF86C400A63D9E /* Build configuration list for PBXProject "VoiceBus" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -381,7 +381,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		749B212627BF86C400A63D9E /* Build configuration list for PBXProject "GPS_TEST" */ = {
+		749B212627BF86C400A63D9E /* Build configuration list for PBXProject "VoiceBus" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				749B213827BF86C900A63D9E /* Debug */,

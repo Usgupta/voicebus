@@ -81,7 +81,6 @@ struct ContentView: View {
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     // Bus Information
-    @State private var busName = "Bus Stop Name"
     @State private var busNumber = "Bus"
     @State private var busTiming = "Mins"
     
@@ -106,7 +105,7 @@ struct ContentView: View {
         self.texttoaudio.busStopCode = replyArr[0]
         replyArr.remove(at: 0)
         let busStopName = replyArr.joined()
-        self.busName = busStopName
+        self.texttoaudio.busStopName = busStopName
         
         
         
@@ -145,12 +144,16 @@ struct ContentView: View {
         //                    self.texttoaudio.showPopup = true
         //
         
+        // calling text to speech to ask the users desired bus number
+        
         DispatchQueue.main.async {
             //                        texttoaudio = TextToAudio()
-            texttoaudio.canSpeak.sayThis(texttoaudio.TTSques["BusNo"]!)
+            texttoaudio.canSpeak.sayThis(texttoaudio.TTSques)
         }
         
+        // calling the bus API to find the bus timings of the desired bus
         
+    
         BusArrivalApi().loadData(busStopCode: self.texttoaudio.busStopCode, busServices: self.texttoaudio.busservices) { item in
             //                self.busArrivalResponses = item
             //                self.busSvcNum = item.services[0].svcNum
@@ -177,7 +180,6 @@ struct ContentView: View {
             self.texttoaudio.busTimings = ""
             print(item)
             
-            
             for svc in self.texttoaudio.busservices {
                 self.texttoaudio.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
                 
@@ -198,10 +200,8 @@ struct ContentView: View {
                 
                 // app contents
                 VStack {
-                    
                     GeometryReader { geo in
                         Spacer()
-                        
 //                         Bus Stop
 //                        NavigationLink(destination: DetailView(choice: "Heads"), isActive: $isShowingDetailView) {}
 //
@@ -326,8 +326,7 @@ struct ContentView: View {
 //                                .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY*1.25)
                             }
                         }
-                        .accessibilityLabel(" voiceover bus timing ")
-                        .accessibility(addTraits: .startsMediaSession)
+                        .accessibility(addTraits: .startsMediaSession) // prevents voiceover to read the label on tapping the button to prevent clashing with the audio produced by the button
     //                        .accessibility(removeTraits: .isButton)
                         .shadow(radius: 20)
                         .onReceive(timer) { input in
@@ -347,7 +346,7 @@ struct ContentView: View {
                                     .accessibility(hidden: true)
                                 VStack {
                                     HStack {
-                                        Text(self.busName)
+                                        Text(self.texttoaudio.busStopName)
                                             .fontWeight(.bold)
                                             .lineLimit(1)
                                             .multilineTextAlignment(.leading)
@@ -380,7 +379,7 @@ struct ContentView: View {
                                     }
                                 }
                                 .padding(.leading, 20)
-                                .padding(.trailing, 30)
+                                .padding(.trailing, 30)
                             }
                             .frame(width: geo.size.width*0.9, height: geo.size.height*0.3)
                             .background(Color(red: 49/255, green: 46/255, blue: 76/255, opacity: 1.0))

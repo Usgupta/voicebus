@@ -53,9 +53,10 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
         let utterance = AVSpeechUtterance(string: phrase)
         utterance.voice = voiceToUse
         utterance.rate = 0.5
+ 
         voiceSynth.speak(utterance)
         
-        print("speaking completed")
+        print("speaking completed, spoken text: ", utterance)
         
         do{
             let _ = try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
@@ -81,6 +82,8 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     var busStopCode = "not yet retrieved from bus api"
     var busTimings = "NIL"
     
+    var busStopName = "NIL"
+    
 //    var showPopup: Binding<Bool>
 //    @Published var showPopup: Bool = false
     
@@ -103,15 +106,17 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     var busservices: [String] = []
     
+    var invalidresp = false
+    
     let canSpeak = CanSpeak()
     
-    var voicereply = ""
+//    var voicereply = ""
     
     var utterance = AVSpeechUtterance(string: "What bus number are you waiting for?")
     
     let sysvoice = AVSpeechSynthesisVoice(language: "en-GB")
     
-    let TTSques = ["BusNo":"What bus number are you waiting for? Pause for a few seconds before speaking your answer","AnotherBus":"Would you like to enter another Bus? Pause for a few seconds and answer as Yes or No","PeriodicUpdates": "Would you like to be periodically notified of your desired bus arrival timings, Pause for a few seconds and answer as Yes or No"]
+    let TTSques: String = "What bus number are you waiting for?" // text to ask user his desired bus stop number
     
     override init() {
         
@@ -119,11 +124,14 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         
         super.init()
         self.canSpeak.delegate = self
-        self.voicereply = ""
+//        self.voicereply = ""
         self.isValidBusNo = false
         self.BusNoExists = true
         self.callpopup = true
         self.busservices = ["NIL"]
+        self.invalidresp = false
+        self.busStopName = "--"
+
 //        self.showPopup = false
        
         
@@ -153,37 +161,41 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     func WaitSpeechtoFinishTimer() {
 
-
+        // 5 seconds timer, speech recognition stops after 5 seconds
         self.timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
             
             print("transcript to be stopped 5 secs are finished")
             print(self.speechRecognizer.transcript)
             
-            let ValidBusNo: Int? = Int(self.speechRecognizer.transcript)
+            let ValidBusNo: Int? = Int(self.speechRecognizer.transcript) // check if the bus number is a number
             
             if(ValidBusNo == nil){
-                print("invalid input, pls press the button and try again")//speak this using texttoaudio and dont call bus api
+//                print("invalid input, pls press the button and try again")//speak this using texttoaudio and dont call bus api
                 
+                self.invalidresp = true // set invalid response to true
                 self.callpopup = false
+                self.canSpeak.sayThis("invalid input, please press the button and try again") // speak out that the user gave an invalid response
                 
             }
             
             else{
                 
                 self.isValidBusNo = true
-                
+                // add the given bus number to our bus number array
                 self.busservices.append(self.speechRecognizer.transcript)
                 print(self.busservices, " bus no array")
                 
             }
             
             
-            print("destriying speech")
+            print("destroying speech recognition task")
             self.speechRecognizer.reset()
             self.speechRecognizer.task?.finish()
             self.speechRecognizer.task?.cancel()
             
-            print("redoing audio")
+            print("re-initialiaing audio")
+            
+            // reinitialising audio for voiceover to continue working, as while destroying speech recognition, we destroy audio engine object as well,
             
             do{
                 let _ = try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
@@ -204,11 +216,19 @@ class TextToAudio: NSObject, CanSpeakDelegate {
                 self.busTimings = ""
                 print("inside bus api printing item",item)
                 
-                
-
                   for svc in self.busservices {
                       self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
                   }
+                // to check if the bus number exists at your current location
+                if(item.isEmpty){
+                    
+                    self.invalidresp = true // set invalid response to true
+                    self.callpopup = false
+                    self.canSpeak.sayThis("bus number \(self.busservices) doesn't exist at \(self.busStopName), please press the button and try again") // speak out that the user gave an invalid response
+
+                    
+                    
+                }
 
             }
             
@@ -239,7 +259,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
            
        }
        
-       if(verifybusstopbutton == false){
+       if(verifybusstopbutton == false && invalidresp == false){
            
            self.busservices = []
            
