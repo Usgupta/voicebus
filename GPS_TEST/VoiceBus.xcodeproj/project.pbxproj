@@ -16,7 +16,7 @@
 		742278FF27D9DA690073A37D /* BusArrivalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742278FE27D9DA690073A37D /* BusArrivalInfo.swift */; };
 		7422790427D9DBC40073A37D /* BusStopApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7422790327D9DBC40073A37D /* BusStopApi.swift */; };
 		7422790627D9DE950073A37D /* BusStopInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7422790527D9DE950073A37D /* BusStopInfo.swift */; };
-		749B212F27BF86C400A63D9E /* GPS_TESTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749B212E27BF86C400A63D9E /* GPS_TESTApp.swift */; };
+		749B212F27BF86C400A63D9E /* VoiceBusApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749B212E27BF86C400A63D9E /* VoiceBusApp.swift */; };
 		749B213127BF86C400A63D9E /* aContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749B213027BF86C400A63D9E /* aContentView.swift */; };
 		749B213327BF86C900A63D9E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 749B213227BF86C900A63D9E /* Assets.xcassets */; };
 		749B213627BF86C900A63D9E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 749B213527BF86C900A63D9E /* Preview Assets.xcassets */; };
@@ -34,7 +34,7 @@
 		7422790327D9DBC40073A37D /* BusStopApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopApi.swift; sourceTree = "<group>"; };
 		7422790527D9DE950073A37D /* BusStopInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusStopInfo.swift; sourceTree = "<group>"; };
 		749B212B27BF86C400A63D9E /* GPS_TEST.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPS_TEST.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		749B212E27BF86C400A63D9E /* GPS_TESTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPS_TESTApp.swift; sourceTree = "<group>"; };
+		749B212E27BF86C400A63D9E /* VoiceBusApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceBusApp.swift; sourceTree = "<group>"; };
 		749B213027BF86C400A63D9E /* aContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aContentView.swift; sourceTree = "<group>"; };
 		749B213227BF86C900A63D9E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		749B213527BF86C900A63D9E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 		749B212D27BF86C400A63D9E /* GPS_TEST */ = {
 			isa = PBXGroup;
 			children = (
-				749B212E27BF86C400A63D9E /* GPS_TESTApp.swift */,
+				749B212E27BF86C400A63D9E /* VoiceBusApp.swift */,
 				7422790227D9DAA10073A37D /* BusStop */,
 				7422790027D9DA800073A37D /* BusArrival */,
 				7422790127D9DA8F0073A37D /* GPS */,
@@ -205,7 +205,7 @@
 				3DC0414227FBDA1800E367E5 /* DetailView.swift in Sources */,
 				012B915427F30021000226D4 /* SpeechRecognizer.swift in Sources */,
 				742278FF27D9DA690073A37D /* BusArrivalInfo.swift in Sources */,
-				749B212F27BF86C400A63D9E /* GPS_TESTApp.swift in Sources */,
+				749B212F27BF86C400A63D9E /* VoiceBusApp.swift in Sources */,
 				3DC0414027FBDA0B00E367E5 /* ContentView.swift in Sources */,
 				7422790627D9DE950073A37D /* BusStopInfo.swift in Sources */,
 				749B213E27BF8D6700A63D9E /* ContentViewModel.swift in Sources */,

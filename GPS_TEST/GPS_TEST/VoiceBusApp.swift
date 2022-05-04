@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct GPS_TESTApp: App {
+struct VoiceBusApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
