@@ -337,55 +337,48 @@ struct ContentView: View {
                         
                         // Bus information
                         VStack {
-                            HStack {
+                            VStack {
                                 Image(systemName: "mappin.and.ellipse")
                                     .resizable()
-                                    .frame(width: geo.size.width*0.15, height: geo.size.width*0.16)
-                                    .padding([.leading], 30)
+                                    .frame(width: geo.size.width*0.16, height: geo.size.width*0.16)
                                     .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
                                     .accessibility(hidden: true)
-                                VStack {
-                                    HStack {
-                                        Text(self.texttoaudio.busStopName)
-                                            .fontWeight(.bold)
-                                            .lineLimit(1)
-                                            .multilineTextAlignment(.leading)
-                                            .font(.system(size: geo.size.width*0.06))
-                                            .minimumScaleFactor(0.01)
-//                                            .font(.system(size: geo.size.width*0.06))
-                                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
-                                            .accessibility(hidden: true)
-                                        Spacer()
-                                    }
-                                    .padding(.bottom, 5)
-                                    
-                                    HStack {
-//                                        Text("Bus " +  self.texttoaudio.busservices[0])
-                                        Text(self.busNumber)
-                                            .fontWeight(.bold)
-                                            .multilineTextAlignment(.leading)
-                                            .font(.system(size: geo.size.width*0.05))
-                                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
-                                            .accessibility(hidden: true)
-                                        Spacer()
-                                        Text(self.busTiming)
-//                                        Text(self.texttoaudio.busTimings)
-                                            .fontWeight(.bold)
-                                            .multilineTextAlignment(.trailing)
-                                            .font(.system(size: geo.size.width*0.05))
-                                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
-//                                            .padding([.leading, .trailing], 30)
-                                            .accessibility(hidden: true)
-                                    }
+                                    .padding(.top, 20)
+                                
+                                Text(self.texttoaudio.busStopName)
+                                    .fontWeight(.bold)
+                                    .lineLimit(1)
+                                    .multilineTextAlignment(.leading)
+                                    .font(.system(size: geo.size.width*0.1))
+                                    .minimumScaleFactor(0.01)
+    //                                            .font(.system(size: geo.size.width*0.06))
+                                    .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                                    .accessibility(hidden: true)
+                                HStack {
+                                    Spacer()
+    //                                        Text("Bus " +  self.texttoaudio.busservices[0])
+                                    Text(self.busNumber)
+                                        .fontWeight(.bold)
+                                        .multilineTextAlignment(.leading)
+                                        .font(.system(size: geo.size.width*0.06))
+                                        .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                                        .accessibility(hidden: true)
+                                    Spacer()
+                                    Text(self.busTiming)
+    //                                        Text(self.texttoaudio.busTimings)
+                                    .fontWeight(.bold)
+                                    .multilineTextAlignment(.trailing)
+                                    .font(.system(size: geo.size.width*0.06))
+                                    .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
+                                    .accessibility(hidden: true)
+                                    Spacer()
                                 }
-                                .padding(.leading, 20)
-                                .padding(.trailing, 30)
+                                .padding(.bottom, 20)
                             }
                             .frame(width: geo.size.width*0.9, height: geo.size.height*0.3)
                             .background(Color(red: 49/255, green: 46/255, blue: 76/255, opacity: 1.0))
                             .accessibilityLabel("bus information")
                             .cornerRadius(10)
-    //                        }
                             .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY*1.65)
                             .onReceive(timer) { time in
                                 
