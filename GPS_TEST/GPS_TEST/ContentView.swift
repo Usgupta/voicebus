@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import UserNotifications
 
 //pop up here
 struct Popup<D, V: View>: ViewModifier {
@@ -170,6 +171,33 @@ struct ContentView: View {
             }
             
         }
+        //add pop up notification here
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                print("All set!")
+            } else if let error = error {
+                print(error.localizedDescription)
+
+        let content = UNMutableNotificationContent()
+        content.title = "Your Bus is Arriving!"
+        content.subtitle =  "bus timing insert" // self.texttoaudio.busTimings
+        content.sound = UNNotificationSound.default
+
+        // show this notification five seconds from now
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+
+        // choose a random identifier
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+        // add our notification request
+        UNUserNotificationCenter.current().add(request)
+                
+            }
+        }
+        
+           
+
+        
     }
     
     fileprivate func BusTimingFromApi() {
@@ -187,7 +215,14 @@ struct ContentView: View {
                 self.busTiming = (item[self.texttoaudio.busservices[0]] ?? "NIL") + " Mins"
             }
             self.showPopup = true
+            
+                    
+                    
         }
+        
+
+        
+
     }
     
     var body: some View {
@@ -299,6 +334,7 @@ struct ContentView: View {
                         Button {
                             
                             VerifyBusTimingTapped()
+                        
                             
                             
                         } label: {
