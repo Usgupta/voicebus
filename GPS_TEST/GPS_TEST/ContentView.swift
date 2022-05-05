@@ -443,7 +443,7 @@ struct ContentView: View {
                             .shadow(radius: 20)
                         }
                         .accessibilityElement(children: .combine)
-                        .accessibilityLabel("bus information")
+                        .accessibilityLabel(" \(self.busNumber) is arriving in \(self.busTiming)")
     //                }
                     
                     // Pop up & slide in notification here

@@ -130,7 +130,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         self.callpopup = true
         self.busservices = ["NIL"]
         self.invalidresp = false
-        self.busStopName = "--"
+        self.busStopName = "something"
 
 //        self.showPopup = false
        
@@ -170,7 +170,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             let ValidBusNo: Int? = Int(self.speechRecognizer.transcript) // check if the bus number is a number
             
             if(ValidBusNo == nil){
-//                print("invalid input, pls press the button and try again")//speak this using texttoaudio and dont call bus api
+                print("invalid input, pls press the button and try again")//speak this using texttoaudio and dont call bus api
                 
                 self.invalidresp = true // set invalid response to true
                 self.callpopup = false
@@ -204,6 +204,8 @@ class TextToAudio: NSObject, CanSpeakDelegate {
                   print(error)
               }
             
+            self.initutterance(voiceouttext: "")
+            
       
             
             print("bus stop api is being invoked")
@@ -221,13 +223,13 @@ class TextToAudio: NSObject, CanSpeakDelegate {
                   }
                 // to check if the bus number exists at your current location
                 if(item.isEmpty){
-                    
+
                     self.invalidresp = true // set invalid response to true
                     self.callpopup = false
                     self.canSpeak.sayThis("bus number \(self.busservices) doesn't exist at \(self.busStopName), please press the button and try again") // speak out that the user gave an invalid response
 
-                    
-                    
+
+
                 }
 
             }
