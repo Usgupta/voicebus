@@ -53,6 +53,7 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
         let utterance = AVSpeechUtterance(string: phrase)
         utterance.voice = voiceToUse
         utterance.rate = 0.5
+        utterance.volume = 0.8
  
         voiceSynth.speak(utterance)
         
@@ -110,6 +111,13 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     let canSpeak = CanSpeak()
     
+    @State private var feedback = UINotificationFeedbackGenerator()
+    
+    
+    
+    
+
+    
 //    var voicereply = ""
     
     var utterance = AVSpeechUtterance(string: "What bus number are you waiting for?")
@@ -130,7 +138,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         self.callpopup = true
         self.busservices = ["NIL"]
         self.invalidresp = false
-        self.busStopName = "something"
+        self.busStopName = "--"
 
 //        self.showPopup = false
        
@@ -154,12 +162,14 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         utterance.rate = 0.45
         utterance.pitchMultiplier = 0.8
         utterance.postUtteranceDelay = 0.2
-        utterance.volume = 0.8
+        utterance.volume = 1
         utterance.voice = sysvoice
         
     }
     
     func WaitSpeechtoFinishTimer() {
+        
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
 
         // 5 seconds timer, speech recognition stops after 5 seconds
         self.timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
@@ -203,8 +213,8 @@ class TextToAudio: NSObject, CanSpeakDelegate {
               }catch{
                   print(error)
               }
-            
-            self.initutterance(voiceouttext: "")
+
+//            self.initutterance(voiceouttext: "")
             
       
             
@@ -220,17 +230,77 @@ class TextToAudio: NSObject, CanSpeakDelegate {
                 
                   for svc in self.busservices {
                       self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
+                      
+                      if (Int(item[svc] ?? "10") != 0) {
+                          var notifytime = Double(item[svc] ?? "10")
+                          notifytime = (notifytime ?? 10)*60
+                          
+                        print("HERE PRINT TIME \(String(describing: item[svc]))",notifytime)
+                          
+                          
+                          
+                          self.feedback.prepare()
+                        
+                          
+                          
+                          
+                          let content = UNMutableNotificationContent()
+                          content.title = "Your Bus is Arriving RIGHT NOW!"
+//                          content.subtitle = self.busTimings
+                          content.sound = UNNotificationSound.default //plays sound
+                          self.feedback.notificationOccurred(.success) //vibrates buzz
+                          
+                        // schedule a 5 min alert, * min * 60
+                          let trigger = UNTimeIntervalNotificationTrigger(timeInterval: notifytime ?? 60, repeats: false)
+                          
+                          // choose a random identifier
+                          let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+                          // add our notification request
+                          UNUserNotificationCenter.current().add(request)
+                      }
                   }
-                // to check if the bus number exists at your current location
-                if(item.isEmpty){
+                
+                
+                
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+                    if success {
+                        print("All set!")
+                    } else if let error = error {
+                        print(error.localizedDescription)
 
-                    self.invalidresp = true // set invalid response to true
-                    self.callpopup = false
-                    self.canSpeak.sayThis("bus number \(self.busservices) doesn't exist at \(self.busStopName), please press the button and try again") // speak out that the user gave an invalid response
-
-
-
+                    }
                 }
+                
+                self.feedback.prepare()
+                let content = UNMutableNotificationContent()
+                content.title = "Your Bus is Arriving!"
+                content.subtitle = self.busTimings
+    
+                content.sound = UNNotificationSound.default //  default //plays sound
+                self.feedback.notificationOccurred(.success) //vibrates buzz
+
+                // show this notification five seconds from now
+
+
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+
+                // choose a random identifier
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+                // add our notification request
+                UNUserNotificationCenter.current().add(request)
+                
+                // to check if the bus number exists at your current location
+//                if(item.isEmpty){
+//
+//                    self.invalidresp = true // set invalid response to true
+//                    self.callpopup = false
+//                    self.canSpeak.sayThis("bus number \(self.busservices) doesn't exist at \(self.busStopName), please press the button and try again") // speak out that the user gave an invalid response
+//
+//
+//
+//                }
 
             }
             

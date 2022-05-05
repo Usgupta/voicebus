@@ -47,7 +47,8 @@ struct ContentView: View {
     
     @State private var isShowingDetailView = false
     @State private var isRecording = false
-        
+
+    
     
     // GPS
     @StateObject private var viewModel = ContentViewModel()
@@ -79,11 +80,12 @@ struct ContentView: View {
 //    @State private var busStopCode = "not yet retrieved from api"
     
     // Timer
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     // Bus Information
     @State private var busNumber = "Bus"
     @State private var busTiming = "Mins"
+    @State private var lastTap : Date = Date(timeIntervalSince1970:0)
     
     @State var texttoaudio = TextToAudio()
     
@@ -96,6 +98,7 @@ struct ContentView: View {
     
     
     fileprivate func verifyBusStopbuttonTapped() {
+        
         //                    self.busStopCode = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
         
         let replyMsg = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
@@ -107,8 +110,6 @@ struct ContentView: View {
         replyArr.remove(at: 0)
         let busStopName = replyArr.joined()
         self.texttoaudio.busStopName = busStopName
-        
-        
         
         
         
@@ -147,56 +148,106 @@ struct ContentView: View {
         
         // calling text to speech to ask the users desired bus number
         
+       
+        
         DispatchQueue.main.async {
-            //                        texttoaudio = TextToAudio()
+            texttoaudio = TextToAudio()
             texttoaudio.canSpeak.sayThis(texttoaudio.TTSques)
         }
         
         // calling the bus API to find the bus timings of the desired bus
         
     
-        BusArrivalApi().loadData(busStopCode: self.texttoaudio.busStopCode, busServices: self.texttoaudio.busservices) { item in
-            //                self.busArrivalResponses = item
-            //                self.busSvcNum = item.services[0].svcNum
+//        BusArrivalApi().loadData(busStopCode: self.texttoaudio.busStopCode, busServices: self.texttoaudio.busservices) { item in
+//            //                self.busArrivalResponses = item
+//            //                self.busSvcNum = item.services[0].svcNum
+//
+//            self.texttoaudio.busTimings = ""
+//            print(item)
+//
+////            // update bus information ui
+////            self.busNumber = "Bus " +  self.texttoaudio.busservices[0]
+////            self.busTiming = (item[self.busNumber] ?? "NIL") + "Mins"
+//
+//            for svc in self.texttoaudio.busservices {
+//                self.texttoaudio.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
+//
+//
+//            }
             
-            self.texttoaudio.busTimings = ""
-            print(item)
+//            let content = UNMutableNotificationContent()
+//            content.title = "Your Bus is Arriving!"
+//            content.subtitle = self.texttoaudio.busTimings
+//            content.sound = UNNotificationSound.default
+
+            // show this notification five seconds from now
             
-//            // update bus information ui
-//            self.busNumber = "Bus " +  self.texttoaudio.busservices[0]
-//            self.busTiming = (item[self.busNumber] ?? "NIL") + "Mins"
-            
-            for svc in self.texttoaudio.busservices {
-                self.texttoaudio.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
-            }
-            
-        }
-        //add pop up notification here
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-            if success {
-                print("All set!")
-            } else if let error = error {
-                print(error.localizedDescription)
+//            for svc in self.texttoaudio.busservices {
+//
+//             -
+//
+//                    // choose a random identifier
+//                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+//
+//                    // add our notification request
+//                    UNUserNotificationCenter.current().add(request)
 
-        let content = UNMutableNotificationContent()
-        content.title = "Your Bus is Arriving!"
-        content.subtitle =  "bus timing insert" // self.texttoaudio.busTimings
-        content.sound = UNNotificationSound.default
-
-        // show this notification five seconds from now
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
-
-        // choose a random identifier
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-
-        // add our notification request
-        UNUserNotificationCenter.current().add(request)
+                        
+//                }
                 
-            }
+//            }
+           
+            print("exiting bus api loop", self.texttoaudio.busTimings)
+            
+//        }
+        //add pop up notification here
+//        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+//            if success {
+//                print("All set!")
+//            } else if let error = error {
+//                print(error.localizedDescription)
+//
+//            }
+//        }
+//
+//        let content = UNMutableNotificationContent()
+//        content.title = "Your Bus is Arriving!"
+//        content.subtitle = self.texttoaudio.busTimings
+//        content.sound = UNNotificationSound.default
+//
+//        // show this notification five seconds from now
+//
+//
+//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+//
+//        // choose a random identifier
+//        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+//
+//        // add our notification request
+//        UNUserNotificationCenter.current().add(request)
+
+
+
+
+        
+    }
+    
+    fileprivate func multipletap(){
+        
+        print("before \(lastTap)")
+
+                                        // Checks if it has been tapped in the last two seconds
+
+        if (Date().timeIntervalSince(lastTap) < 2) {
+
+            return
+
         }
         
-           
+        lastTap = Date()
+        print("after \(lastTap)")
 
+        VerifyBusTimingTapped()
         
     }
     
@@ -333,7 +384,22 @@ struct ContentView: View {
                         // Bus Service
                         Button {
                             
-                            VerifyBusTimingTapped()
+                            multipletap()
+                            
+                            
+//                            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
+//
+//                                self.tap+=1
+//                                print("tap no",self.tap)
+//
+//                                VerifyBusTimingTapped()
+//
+//
+//
+//                            })
+//
+                            
+                            
                         
                             
                             
@@ -362,6 +428,7 @@ struct ContentView: View {
 //                                .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY*1.25)
                             }
                         }
+                        
                         .accessibility(addTraits: .startsMediaSession) // prevents voiceover to read the label on tapping the button to prevent clashing with the audio produced by the button
     //                        .accessibility(removeTraits: .isButton)
                         .shadow(radius: 20)
