@@ -82,6 +82,7 @@ struct ContentView: View {
     // Timer
     var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
+    
     // Bus Information
     @State private var busNumber = "Bus"
     @State private var busTiming = "Mins"
@@ -94,13 +95,30 @@ struct ContentView: View {
     @State private var showPopup: Bool = false
     @State private var selectedPicture = Int.random(in: 0...3) //accesiblilty
     
+    
+    
+    
+    
+    
+//    private var busstopfunc = verifyBusStopbuttonTapped()
+
+    
 //
     
     
-    fileprivate func verifyBusStopbuttonTapped() {
-        
-        //                    self.busStopCode = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
-        
+    fileprivate func getNotificationPermission() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
+            if success {
+                print("All set!")
+            } else if let error = error {
+                print(error.localizedDescription)
+                
+            }
+        }
+    }
+    
+    var verifyBusStopbuttonTapped: Void {
+                
         let replyMsg = BusStopApi().calculateNearestBusStop(busStops: self.busStops, currentLocationLat: currentLat, currentLocationLong: currentLong)
         var replyArr = replyMsg.components(separatedBy: " ")
         
@@ -110,129 +128,15 @@ struct ContentView: View {
         replyArr.remove(at: 0)
         let busStopName = replyArr.joined()
         self.texttoaudio.busStopName = busStopName
+         
+        getNotificationPermission()
         
-        
-        
-//        texttoaudio.verifybusstopbutton = true
-//
-//        texttoaudio.canSpeak.sayThis("Based on your current location, you are currently at \(busStopName)")
-//
-//        print("done speaking")
-//        self.isShowingDetailView = true
-//
-        //                    // IF APP ACTIVE
-        //                    feedback.prepare()
-        //                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-        //                        showPopup = true
-        //                        feedback.notificationOccurred(.success)
-        //                    }
-        //                     // IF APP INACTIVE/ background
-        //                     let content = UNMutableNotificationContent()
-        //                     content.title = "Your Bus is Arriving!"
-        //                     content.subtitle = self.busTimings
-        //                     content.sound = UNNotificationSound.default //plays sound
-        //                     feedback.notificationOccurred(.success) //vibrates buzz
-        //                     // show this notification five seconds from now
-        //                     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-        //                     // choose a random identifier
-        //                     let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        //                     // add our notification request
-        //                     UNUserNotificationCenter.current().add(request)
-        
+ 
     }
     
-    fileprivate func VerifyBusTimingTapped() {
-        // remove this pls
-        //                    self.texttoaudio.showPopup = true
-        //
-        
-        // calling text to speech to ask the users desired bus number
-        
-       
-        
-        DispatchQueue.main.async {
-            texttoaudio = TextToAudio()
-            texttoaudio.canSpeak.sayThis(texttoaudio.TTSques)
-        }
-        
-        // calling the bus API to find the bus timings of the desired bus
-        
+
     
-//        BusArrivalApi().loadData(busStopCode: self.texttoaudio.busStopCode, busServices: self.texttoaudio.busservices) { item in
-//            //                self.busArrivalResponses = item
-//            //                self.busSvcNum = item.services[0].svcNum
-//
-//            self.texttoaudio.busTimings = ""
-//            print(item)
-//
-////            // update bus information ui
-////            self.busNumber = "Bus " +  self.texttoaudio.busservices[0]
-////            self.busTiming = (item[self.busNumber] ?? "NIL") + "Mins"
-//
-//            for svc in self.texttoaudio.busservices {
-//                self.texttoaudio.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
-//
-//
-//            }
-            
-//            let content = UNMutableNotificationContent()
-//            content.title = "Your Bus is Arriving!"
-//            content.subtitle = self.texttoaudio.busTimings
-//            content.sound = UNNotificationSound.default
-
-            // show this notification five seconds from now
-            
-//            for svc in self.texttoaudio.busservices {
-//
-//             -
-//
-//                    // choose a random identifier
-//                    let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-//
-//                    // add our notification request
-//                    UNUserNotificationCenter.current().add(request)
-
-                        
-//                }
-                
-//            }
-           
-            print("exiting bus api loop", self.texttoaudio.busTimings)
-            
-//        }
-        //add pop up notification here
-//        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-//            if success {
-//                print("All set!")
-//            } else if let error = error {
-//                print(error.localizedDescription)
-//
-//            }
-//        }
-//
-//        let content = UNMutableNotificationContent()
-//        content.title = "Your Bus is Arriving!"
-//        content.subtitle = self.texttoaudio.busTimings
-//        content.sound = UNNotificationSound.default
-//
-//        // show this notification five seconds from now
-//
-//
-//        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-//
-//        // choose a random identifier
-//        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-//
-//        // add our notification request
-//        UNUserNotificationCenter.current().add(request)
-
-
-
-
-        
-    }
-    
-    fileprivate func multipletap(){
+    fileprivate func VerifyBusTimingTapped(){
         
         print("before \(lastTap)")
 
@@ -247,7 +151,12 @@ struct ContentView: View {
         lastTap = Date()
         print("after \(lastTap)")
 
-        VerifyBusTimingTapped()
+        
+        DispatchQueue.main.async {
+            texttoaudio = TextToAudio()
+            texttoaudio.verifybusStop = verifyBusStopbuttonTapped
+            texttoaudio.canSpeak.sayThis(texttoaudio.TTSques)
+        }
         
     }
     
@@ -276,6 +185,10 @@ struct ContentView: View {
 
     }
     
+    
+    
+
+    
     var body: some View {
  
         if #available(iOS 15.0, *) {
@@ -288,121 +201,14 @@ struct ContentView: View {
                 VStack {
                     GeometryReader { geo in
                         Spacer()
-//                         Bus Stop
-//                        NavigationLink(destination: DetailView(choice: "Heads"), isActive: $isShowingDetailView) {}
-//
-//                        Button {
-//                            verifyBusStopbuttonTapped()
-//
-//                        } label: {
-//                            GeometryReader { geo in
-//                                HStack {
-//                                    Spacer()
-//                                    VStack {
-//                                        Spacer()
-//                                        Image(systemName: "mappin.and.ellipse")
-//                                            .resizable()
-//                                            .frame(width: geo.size.width*0.18, height: geo.size.width*0.18)
-//                                            .padding(.bottom, 10)
-//                                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
-//                                        Text("VERIFY\nBUS STOP")
-//                                            .fontWeight(.bold)
-//                                            .multilineTextAlignment(.center)
-//                                            .font(.system(size: geo.size.width*0.1))
-//                                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
-//                                        Spacer()
-//                                    }
-//                                    .frame(width: geo.size.width*0.9, height: geo.size.height*0.9)
-//                                    .background(Color(red: 49/255, green: 46/255, blue: 76/255, opacity: 1.0))
-//                                    .cornerRadius(10)
-//                                    Spacer()
-//                                }
-//                                .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY)
-//                            }
-//
-//                        }
-//                        .accessibility(addTraits: .startsMediaSession)
-//    //                    .accessibility(hidden: true)
-//                    .accessibilityLabel(self.texttoaudio.busStopCode)
-//
-//                        //POP UP IF APP ACTIVE
-//                        //                .popup(isPresented: $showPopup, with: $busTimings) { item in
-//                        //                    VStack(spacing: 20) {
-//                        //                        TextField("Name", text: self.$busTimings)
-//                        //                        Button {
-//                        //                            showPopup = false
-//                        //                        } label: {
-//                        //                            Text("Dismiss Popup")
-//                        //                        }
-//                        //                    }
-//                        //                    .frame(width: 300)
-//                        //                    .padding()
-//                        //                    .background(Color.gray)
-//                        //                    .cornerRadius(8)
-//                        //                }
-//                            .shadow(radius: 20)
-//                            .onAppear {
-//
-//
-//    //                            texttoaudio = TextToAudio(showpopup: self.$showPopup)
-//
-//                                // GPS
-//                                viewModel.checkIfLocationServicesIsEnabled()
-//                                coordinates = viewModel.retrieveUserLocation()
-//                                currentLat = coordinates.latitude
-//                                currentLong = coordinates.longitude
-//
-//                                // Load ALL bus stops API
-//                                for url in urls {
-//                                    BusStopApi().loadData(urlString: url) { item in
-//                                        self.busStopResponses = item
-//                                        self.busStops += item.busStops
-//                                    }
-//                                }
-//                            }
-//                        //        Text("Nearest bus stop is: \(busStopCode)")
-//
-//                        Spacer()
-//                        if (showPopup) {
-//                            Text(self.texttoaudio.busTimings)
-//                                .font(.largeTitle)
-//                                .foregroundColor(.white)
-//                                .padding()
-//                            Spacer()
-//                        }
-//
-//                        Text("wait a few seconds before speaking...") //self.texttoaudio.busservices
-//                            .fontWeight(.bold)
-//                            .font(.largeTitle)
-//                            .multilineTextAlignment(.center)
-//                            .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
                         
                         
                         
-
                         
-                        // Bus Service
                         Button {
                             
-                            multipletap()
-                            
-                            
-//                            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
-//
-//                                self.tap+=1
-//                                print("tap no",self.tap)
-//
-//                                VerifyBusTimingTapped()
-//
-//
-//
-//                            })
-//
-                            
-                            
-                        
-                            
-                            
+                            VerifyBusTimingTapped()
+
                         } label: {
                             HStack {
                                 Spacer()
@@ -430,7 +236,6 @@ struct ContentView: View {
                         }
                         
                         .accessibility(addTraits: .startsMediaSession) // prevents voiceover to read the label on tapping the button to prevent clashing with the audio produced by the button
-    //                        .accessibility(removeTraits: .isButton)
                         .shadow(radius: 20)
                         .onReceive(timer) { input in
                             BusTimingFromApi()
@@ -486,7 +291,7 @@ struct ContentView: View {
                             .onReceive(timer) { time in
                                 
                                 // retrieve bus information every 10 seconds
-                                verifyBusStopbuttonTapped()
+                                verifyBusStopbuttonTapped
                             }
                             .onAppear() {
                                 
@@ -505,51 +310,14 @@ struct ContentView: View {
                                 }
                                 
                                 // retrieve bus information every 10 seconds
-                                verifyBusStopbuttonTapped()
+                                verifyBusStopbuttonTapped
                             }
                             .shadow(radius: 20)
                         }
                         .accessibilityElement(children: .combine)
                         .accessibilityLabel(" \(self.busNumber) is arriving in \(self.busTiming)")
     //                }
-                    
-                    // Pop up & slide in notification here
-                    //        Button("Schedule Notification") {
-                    //           // IF APP ACTIVE
-                    //           feedback.prepare()
-                    //           DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                    //               showPopup = true
-                    //               feedback.notificationOccurred(.success)
-                    //           }
-                    //            // IF APP INACTIVE/ background
-                    //            let content = UNMutableNotificationContent()
-                    //            content.title = "Your Bus is Arriving!"
-                    //            content.subtitle = self.busTimings
-                    //            content.sound = UNNotificationSound.default //plays sound
-                    //            feedback.notificationOccurred(.success) //vibrates buzz
-                    //            // show this notification five seconds from now
-                    //            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 3, repeats: false)
-                    //            // choose a random identifier
-                    //            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                    //            // add our notification request
-                    //            UNUserNotificationCenter.current().add(request)
-                    //        }
-                    //POP UP IF APP ACTIVE
-                    //        .popup(isPresented: $showPopup, with: $busTimings) { item in
-                    //            VStack(spacing: 20) {
-                    //                TextField("Name", text: self.$busTimings)
-                    //                Button {
-                    //                    showPopup = false
-                    //                } label: {
-                    //                    Text("Dismiss Popup")
-                    //                }
-                    //            }
-                    //            .frame(width: 300)
-                    //            .padding()
-                    //            .background(Color.gray)
-                    //            .cornerRadius(8)
-                    //        }
-                    
+                  
                         Spacer()
                         
                     }
@@ -557,22 +325,7 @@ struct ContentView: View {
                 }
                 
             }
-            //POP UP IF APP ACTIVE
-//            .popup(isPresented: self.$showPopup, with: self.$texttoaudio.busTimings) { item in
-//                VStack(spacing: 20) {
-//                    Text(self.texttoaudio.busTimings)
-//                    //                TextField("Name", text: self.$busTimings)
-//                    Button {
-//                        self.showPopup = false
-//                    } label: {
-//                        Text("Dismiss Popup")
-//                    }
-//                }
-//                .frame(width: 300)
-//                .padding()
-//                .background(Color.gray)
-//                .cornerRadius(8)
-//            }
+ 
         } else {
             // Fallback on earlier versions
         }

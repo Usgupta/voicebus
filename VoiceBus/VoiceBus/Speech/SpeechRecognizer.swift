@@ -135,10 +135,7 @@ class SpeechRecognizer: ObservableObject{
     
     /// Stop transcribing audio.
     func stopTranscribing() {
-        
-        
         reset()
-        
     }
     
     /// Reset the speech recognizer.
