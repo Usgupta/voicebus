@@ -32,15 +32,71 @@ Visually impaired users need a simplified and interactive application to quickly
 
 
 ## Contributors 
-1. Umang Gupta [<img src="https://s18955.pcdn.co/wp-content/uploads/2018/02/github.png" width="13.5"/>](https://github.com/Usgupta) [<img src="https://i.stack.imgur.com/gVE0j.png" width="13.5"/>](https://www.linkedin.com/in/umangguptacs/)
-
-
-2. Priscilla Tan [<img src="https://s18955.pcdn.co/wp-content/uploads/2018/02/github.png" width="13.5"/>](https://github.com/prispearly) [<img src="https://i.stack.imgur.com/gVE0j.png" width="13.5"/>](https://www.linkedin.com/in/priscilla-pearly/)
+<p align="left">
+   <ol>
+   <li>Umang Gupta 
+      
+  <a href="https://github.com/Usgupta/#gh-light-mode-only">
+    <img src="https://user-images.githubusercontent.com/3369400/139448065-39a229ba-4b06-434b-bc67-616e2ed80c8f.png#gh-light-mode-only" width="13.5" height="13.5" />
+  </a>
+  <a href="https://github.com/Usgupta/#gh-dark-mode-only">
+    <img src="https://user-images.githubusercontent.com/3369400/139447912-e0f43f33-6d9f-45f8-be46-2df5bbc91289.png#gh-dark-mode-only" width="13.5" height="13.5" />
+  </a>
    
-3. Gerald Hoo [<img src="https://s18955.pcdn.co/wp-content/uploads/2018/02/github.png" width="13.5"/>](https://github.com/geraldhyw) [<img src="https://i.stack.imgur.com/gVE0j.png" width="13.5"/>](https://www.linkedin.com/in/gerald-hoo/)
+   <a href="https://www.linkedin.com/in/umangguptacs/">
+    <img src="https://i.stack.imgur.com/gVE0j.png" width="13.5" height="13.5" />
+  </a>
+     </li>  
+</p>
 
+<p align="left">
+   
+   <li>Priscilla Tan 
+  <a href="https://github.com/prispearly/#gh-light-mode-only">
+    <img src="https://user-images.githubusercontent.com/3369400/139448065-39a229ba-4b06-434b-bc67-616e2ed80c8f.png#gh-light-mode-only" width="13.5" height="13.5" />
+  </a>
+  <a href="https://github.com/prispearly/#gh-dark-mode-only">
+    <img src="https://user-images.githubusercontent.com/3369400/139447912-e0f43f33-6d9f-45f8-be46-2df5bbc91289.png#gh-dark-mode-only" width="13.5" height="13.5" />
+  </a>
+   
+   <a href="https://www.linkedin.com/in/priscilla-pearly/">
+    <img src="https://i.stack.imgur.com/gVE0j.png" width="13.5" height="13.5" />
+  </a>
+      </li>  
+</p>
 
-4. Aishwarya Palaniappan [<img src="https://s18955.pcdn.co/wp-content/uploads/2018/02/github.png" width="13.5"/>](https://github.com/aishh12345) [<img src="https://i.stack.imgur.com/gVE0j.png" width="13.5"/>](https://www.linkedin.com/in/palaniappan-aishwarya/)
+<p align="left">
+   
+   <li>Gerald Hoo 
+  <a href="https://github.com/geraldhyw/#gh-light-mode-only">
+    <img src="https://user-images.githubusercontent.com/3369400/139448065-39a229ba-4b06-434b-bc67-616e2ed80c8f.png#gh-light-mode-only" width="13.5" height="13.5" />
+  </a>
+  <a href="https://github.com/geraldhyw/#gh-dark-mode-only">
+    <img src="https://user-images.githubusercontent.com/3369400/139447912-e0f43f33-6d9f-45f8-be46-2df5bbc91289.png#gh-dark-mode-only" width="13.5" height="13.5" />
+  </a>
+   
+   <a href="https://www.linkedin.com/in/gerald-hoo/">
+    <img src="https://i.stack.imgur.com/gVE0j.png" width="13.5" height="13.5" />
+  </a>
+   </li>  
+</p>
+
+<p align="left">
+   
+   <li>Aishwarya Palaniappan 
+  <a href="https://github.com/aishh12345/#gh-light-mode-only">
+    <img src="https://user-images.githubusercontent.com/3369400/139448065-39a229ba-4b06-434b-bc67-616e2ed80c8f.png#gh-light-mode-only" width="13.5" height="13.5" />
+  </a>
+  <a href="https://github.com/aishh12345/#gh-dark-mode-only">
+    <img src="https://user-images.githubusercontent.com/3369400/139447912-e0f43f33-6d9f-45f8-be46-2df5bbc91289.png#gh-dark-mode-only" width="13.5" height="13.5" />
+  </a> 
+   <a href="https://www.linkedin.com/in/palaniappan-aishwarya/">
+    <img src="https://i.stack.imgur.com/gVE0j.png" width="13.5" height="13.5" />
+  </a>
+   </li>
+</ol>
+</p>
+
 
 
 
