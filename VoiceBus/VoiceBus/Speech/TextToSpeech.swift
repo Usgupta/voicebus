@@ -65,8 +65,11 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
        
    }
 }
+
+/// Describe what the class does
 class TextToAudio: NSObject, CanSpeakDelegate {
     
+    /// Speechrecognizer instance used to recognize all speech input
     var speechRecognizer = SpeechRecognizer()
     
     var busStopCode = "not yet retrieved from bus api"
@@ -109,8 +112,6 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         self.busservices = ["NIL"]
         self.invalidresp = false
         self.busStopName = "--"
-
-        
         
         print("done init tts")
         
@@ -131,12 +132,12 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         
     }
     
-    fileprivate func popupNotification(_ item: [String : String], _ svc: String) {
-        if (Int(item[svc] ?? "10") != 0) {
-            var notifytime = Double(item[svc] ?? "10")
+    fileprivate func createQueuedNotifcationFrom(dictionary item: [String : String], named service: String) {
+        if (Int(item[service] ?? "10") != 0) {
+            var notifytime = Double(item[service] ?? "10")
             notifytime = (notifytime ?? 10)*60
             
-            print("HERE PRINT TIME \(String(describing: item[svc]))",notifytime)
+            print("HERE PRINT TIME \(String(describing: item[service])) \(String(describing: notifytime))")
             
             
             self.feedback.prepare()
@@ -155,8 +156,6 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             
             // add our notification request
             UNUserNotificationCenter.current().add(request)
-            
-            
         }
         
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
@@ -197,15 +196,15 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             self.busTimings = ""
             print("inside bus api printing item",item)
             
-            for svc in self.busservices {
-                self.busTimings += "Bus \(svc) is coming in \(item[svc] ?? "NIL") minutes..\n"
+            for busService in self.busservices {
+                self.busTimings += "Bus \(busService) is coming in \(item[busService] ?? "NIL") minutes..\n"
                 
                 
-                if (Int(item[svc] ?? "10") != 0) {
-                    var notifytime = Double(item[svc] ?? "10")
+                if (Int(item[busService] ?? "10") != 0) {
+                    var notifytime = Double(item[busService] ?? "10")
                     notifytime = (notifytime ?? 10)*60
                     
-                    print("HERE PRINT TIME \(String(describing: item[svc]))",notifytime)
+                    print("HERE PRINT TIME \(String(describing: item[busService]))",notifytime)
                     
                 }
                 
@@ -224,7 +223,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
                 
                 else{
                     
-                    self.popupNotification(item, svc)
+                    self.createQueuedNotifcationFrom(dictionary:item, named:busService)
                     
                 }
                 
@@ -234,58 +233,95 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         }
     }
     
-    func WaitSpeechtoFinishTimer() {
+    fileprivate func validresponse() {
+        self.isValidBusNo = true
+        // add the given bus number to our bus number array
+        self.busservices.append(self.speechRecognizer.transcript)
+        print(self.busservices, " bus no array")
+    }
+    
+    fileprivate func invalidresponse() {
+        print("invalid input, pls press the button and try again")//speak this using texttoaudio and dont call bus api
         
-        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+        self.invalidresp = true // set invalid response to true
+        self.canSpeak.sayThis("invalid input, please press the button and try again")
+    }
+    
+    fileprivate func reinitialiseAudio() {
+        // reinitialising audio for voiceover to continue working, as while destroying speech recognition, we destroy audio engine object as well,
+        print("re-initialiaing audio")
+        
+        do {
+            let _ = try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
+                                                                    options: .duckOthers)
+        } catch {
+            print(error)
+        }
+    }
 
-        // 5 seconds timer, speech recognition stops after 5 seconds
-        self.timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
-            
+    
+    fileprivate func resetSpeechSynthesizer() {
+        print("destroying speech recognition task")
+        self.speechRecognizer.reset()
+        self.speechRecognizer.task?.finish()
+        self.speechRecognizer.task?.cancel()
+    }
+    
+    fileprivate func buildtimer() -> Timer {
+        return Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
             print("transcript to be stopped 5 secs are finished")
             print(self.speechRecognizer.transcript)
+
+            defer {
+                self.resetSpeechSynthesizer()
+                self.reinitialiseAudio()
+            }
+
             
-            let ValidBusNo: Int? = Int(self.speechRecognizer.transcript) // check if the bus number is a number
-            
-            if(ValidBusNo == nil){
-                print("invalid input, pls press the button and try again")//speak this using texttoaudio and dont call bus api
-                
-                self.invalidresp = true // set invalid response to true
-                self.canSpeak.sayThis("invalid input, please press the button and try again") // speak out that the user gave an invalid response
-                
+            guard Int(self.speechRecognizer.transcript) != nil // check if the bus number is a number
+            else {
+                self.invalidresponse() // speak out that the user gave an invalid response
+                return
             }
             
-            else{
-                
-                self.isValidBusNo = true
-                // add the given bus number to our bus number array
-                self.busservices.append(self.speechRecognizer.transcript)
-                print(self.busservices, " bus no array")
-                
-            }
-            
-            
-            print("destroying speech recognition task")
-            self.speechRecognizer.reset()
-            self.speechRecognizer.task?.finish()
-            self.speechRecognizer.task?.cancel()
-            
-            print("re-initialiaing audio")
-            
-            // reinitialising audio for voiceover to continue working, as while destroying speech recognition, we destroy audio engine object as well,
-            
-            do{
-                let _ = try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
-                                                                        options: .duckOthers)
-              }catch{
-                  print(error)
-              }
+            self.validresponse()
             
             print("bus stop api is being invoked")
             print(self.busStopCode," bus stop code b4 bus api")
             
             self.busApiFindBusTiming()
             
+//            if(ValidBusNo == nil){
+//                self.invalidresponse() // speak out that the user gave an invalid response
+//                return
+//            }
+            
+//            else{
+//                self.validresponse()
+//            }
+//
+            
+//            print("re-initialiaing audio")
+//
+//            // reinitialising audio for voiceover to continue working, as while destroying speech recognition, we destroy audio engine object as well,
+//
+//            do{
+//                let _ = try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
+//                                                                        options: .duckOthers)
+//              }catch{
+//                  print(error)
+//              }
+            
+           
+            
         })
+    }
+    func waitSpeechtoFinishTimer() -> Void{
+        
+        UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+
+        // 5 seconds timer, speech recognition stops after 5 seconds
+        self.timer = buildtimer()
         
         print("outside timer loop")
         
@@ -301,7 +337,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
        print("speech did finish invoked")
  
        
-       if(invalidresp == false){
+       if (invalidresp == false) {
            
            self.busservices = []
            
@@ -313,7 +349,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
                self.speechRecognizer.reset()
 //               self.speechRecognizer = SpeechRecognizer()
                self.speechRecognizer.transcribe()
-               self.WaitSpeechtoFinishTimer()
+               self.waitSpeechtoFinishTimer()
 
 
            }
