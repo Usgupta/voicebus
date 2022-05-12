@@ -12,9 +12,12 @@ Visually impaired users need a simplified and interactive application to quickly
 4. Completely accessible using VoiceOver
 5. Receive notifications of the bus arrival (if the app is open in background)
 
+
+
 ## Screenshots
 
-<img src="https://user-images.githubusercontent.com/57800546/167238256-c43153a5-93ff-418c-b5b6-6aa8f28a4466.png" width="200"/> <img src="https://user-images.githubusercontent.com/57800546/167237928-92425b30-dee8-4516-8924-2df8ab8aa6a1.png" width="200"/> <img src="https://user-images.githubusercontent.com/57800546/167238127-37af6126-956c-4d84-8b46-460654b86983.png" width="200"/> <img src="https://user-images.githubusercontent.com/57800546/167237839-fc4ea189-455e-4152-935b-07670fa0319f.png" width="200"/>
+<img src="https://user-images.githubusercontent.com/57800546/168020304-bd0fc1c7-e43b-491b-a855-c4f7d00a51e2.png" width="195"/> <img src="https://user-images.githubusercontent.com/57800546/168020325-9d04e58d-a3f7-4d3e-85d6-aaf900df2e51.png" width="195"/> <img src="https://user-images.githubusercontent.com/57800546/168020466-ae2d86e2-aa80-4489-bc10-1b95bccc18e3.png" width="195"/> <img src="https://user-images.githubusercontent.com/57800546/168020911-172f621d-f9e0-4a9a-9775-4e033f0d594d.png" width="195"/> <img src="https://user-images.githubusercontent.com/57800546/168021319-7a307d8f-a28b-4dd4-a846-d6553e8999c2.png" width="195"/>
+
 
 ## How to Build
 
