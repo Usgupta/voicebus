@@ -37,7 +37,7 @@ Visually impaired users need a simplified and interactive application to quickly
 1. Improve accuracy of bus stop location and bus timing
 2. Alert user if nearby a bus stop
 3. Improve integration of Voiceover and in-app speech recognition and speech output
-4. Expand to other bus networks of other countries 
+4. Expand to bus networks of other countries 
 
 ## Contributors
 
