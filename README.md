@@ -29,13 +29,15 @@ Visually impaired users need a simplified and interactive application to quickly
 ## Requirements
 
 1. Iphone running iOS 15.0 or above
-2. Works for buses located in Singapore only
+2. Xcode version Version 13.3.1 or above
+3. Buses located in Singapore only
 
 ## Further Improvements
 
 1. Improve accuracy of bus stop location and bus timing
 2. Alert user if nearby a bus stop
 3. Improve integration of Voiceover and in-app speech recognition and speech output
+4. Expand to other bus networks of other countries 
 
 ## Contributors
 
