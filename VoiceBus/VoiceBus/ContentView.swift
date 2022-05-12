@@ -47,8 +47,6 @@ struct ContentView: View {
     
     @State private var isShowingDetailView = false
     @State private var isRecording = false
-
-    
     
     // GPS
     @StateObject private var viewModel = ContentViewModel()
@@ -96,16 +94,6 @@ struct ContentView: View {
     @State private var selectedPicture = Int.random(in: 0...3) //accesiblilty
     
     
-    
-    
-    
-    
-//    private var busstopfunc = verifyBusStopbuttonTapped()
-
-    
-//
-    
-    
     fileprivate func getNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
@@ -133,14 +121,12 @@ struct ContentView: View {
         
  
     }
-    
-
-    
+ 
     fileprivate func VerifyBusTimingTapped(){
         
         print("before \(lastTap)")
 
-                                        // Checks if it has been tapped in the last two seconds
+        // Checks if it has been tapped in the last two seconds
 
         if (Date().timeIntervalSince(lastTap) < 2) {
 
@@ -162,8 +148,6 @@ struct ContentView: View {
     
     fileprivate func BusTimingFromApi() {
         BusArrivalApi().loadData(busStopCode: self.texttoaudio.busStopCode, busServices: self.texttoaudio.busservices) { item in
-            //                self.busArrivalResponses = item
-            //                self.busSvcNum = item.services[0].svcNum
             
             self.texttoaudio.busTimings = ""
             print(item)
@@ -175,19 +159,10 @@ struct ContentView: View {
                 self.busTiming = (item[self.texttoaudio.busservices[0]] ?? "NIL") + " Mins"
             }
             self.showPopup = true
-            
-                    
-                    
+ 
         }
-        
-
-        
 
     }
-    
-    
-    
-
     
     var body: some View {
  
@@ -201,10 +176,7 @@ struct ContentView: View {
                 VStack {
                     GeometryReader { geo in
                         Spacer()
-                        
-                        
-                        
-                        
+  
                         Button {
                             
                             VerifyBusTimingTapped()
@@ -230,8 +202,6 @@ struct ContentView: View {
                                 .background(Color(red: 49/255, green: 46/255, blue: 76/255, opacity: 1.0))
                                 .cornerRadius(10)
                                 Spacer()
-//                                }
-//                                .position(x: geo.frame(in: .local).midX, y: geo.frame(in: .local).midY*1.25)
                             }
                         }
                         
@@ -259,12 +229,10 @@ struct ContentView: View {
                                     .multilineTextAlignment(.leading)
                                     .font(.system(size: geo.size.width*0.1))
                                     .minimumScaleFactor(0.01)
-    //                                            .font(.system(size: geo.size.width*0.06))
                                     .foregroundColor(Color(red: 219/255, green: 213/255, blue: 244/255, opacity: 1.0))
                                     .accessibility(hidden: true)
                                 HStack {
                                     Spacer()
-    //                                        Text("Bus " +  self.texttoaudio.busservices[0])
                                     Text(self.busNumber)
                                         .fontWeight(.bold)
                                         .multilineTextAlignment(.leading)
@@ -273,7 +241,6 @@ struct ContentView: View {
                                         .accessibility(hidden: true)
                                     Spacer()
                                     Text(self.busTiming)
-    //                                        Text(self.texttoaudio.busTimings)
                                     .fontWeight(.bold)
                                     .multilineTextAlignment(.trailing)
                                     .font(.system(size: geo.size.width*0.06))

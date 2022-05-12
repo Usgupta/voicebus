@@ -18,10 +18,6 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
     let voiceSynth = AVSpeechSynthesizer()
     var voiceToUse: AVSpeechSynthesisVoice?
     
-   
-    
-   
-    
     var delegate: CanSpeakDelegate!
     
     override init(){
@@ -118,20 +114,6 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         
     }
     
-    
-    
-    func initutterance(voiceouttext: String) {
-
-        
-        utterance = AVSpeechUtterance(string: voiceouttext)
-        utterance.rate = 0.45
-        utterance.pitchMultiplier = 0.8
-        utterance.postUtteranceDelay = 0.2
-        utterance.volume = 1
-        utterance.voice = sysvoice
-        
-    }
-    
     fileprivate func createQueuedNotifcationFrom(dictionary item: [String : String], named service: String) {
         if (Int(item[service] ?? "10") != 0) {
             var notifytime = Double(item[service] ?? "10")
@@ -143,7 +125,8 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             self.feedback.prepare()
             
             let content = UNMutableNotificationContent()
-            content.title = "Your Bus is Arriving RIGHT NOW!"
+            content.title = "VoiceBus"
+            content.subtitle = "Your Bus is Arriving RIGHT NOW!"
             //                          content.subtitle = self.busTimings
             content.sound = UNNotificationSound.default //plays sound
             self.feedback.notificationOccurred(.success) //vibrates buzz
@@ -169,7 +152,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         
         self.feedback.prepare()
         let content = UNMutableNotificationContent()
-        content.title = "Your Bus is Arriving!"
+        content.title = "VoiceBus"
         content.subtitle = self.busTimings
         
         content.sound = UNNotificationSound.default //  default //plays sound
@@ -190,45 +173,24 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     fileprivate func busApiFindBusTiming() {
         BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.busservices) { item in
-            //                self.busArrivalResponses = item
-            //                self.busSvcNum = item.services[0].svcNum
-            
             self.busTimings = ""
             print("inside bus api printing item",item)
             
             for busService in self.busservices {
                 self.busTimings += "Bus \(busService) is coming in \(item[busService] ?? "NIL") minutes..\n"
-                
-                
-                if (Int(item[busService] ?? "10") != 0) {
-                    var notifytime = Double(item[busService] ?? "10")
-                    notifytime = (notifytime ?? 10)*60
-                    
-                    print("HERE PRINT TIME \(String(describing: item[busService]))",notifytime)
-                    
-                }
-                
-                
                 if(item.isEmpty && self.invalidresp == false){
                     
                     self.invalidresp = true // set invalid response to true
-                    
-                    
                     self.canSpeak.sayThis("bus number \(self.busservices) either doesn't exist at \(self.busStopName), or is currently unavailable") // speak out that the user gave an invalid response
                     
                     self.busservices = ["NIL"]
-                    
-                    
                 }
                 
                 else{
-                    
                     self.createQueuedNotifcationFrom(dictionary:item, named:busService)
-                    
                 }
                 
             }
-            
             
         }
     }
@@ -276,7 +238,6 @@ class TextToAudio: NSObject, CanSpeakDelegate {
                 self.resetSpeechSynthesizer()
                 self.reinitialiseAudio()
             }
-
             
             guard Int(self.speechRecognizer.transcript) != nil // check if the bus number is a number
             else {
@@ -290,34 +251,9 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             print(self.busStopCode," bus stop code b4 bus api")
             
             self.busApiFindBusTiming()
-            
-//            if(ValidBusNo == nil){
-//                self.invalidresponse() // speak out that the user gave an invalid response
-//                return
-//            }
-            
-//            else{
-//                self.validresponse()
-//            }
-//
-            
-//            print("re-initialiaing audio")
-//
-//            // reinitialising audio for voiceover to continue working, as while destroying speech recognition, we destroy audio engine object as well,
-//
-//            do{
-//                let _ = try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
-//                                                                        options: .duckOthers)
-//              }catch{
-//                  print(error)
-//              }
-            
-           
-            
         })
     }
     func waitSpeechtoFinishTimer() -> Void{
-        
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
 
         // 5 seconds timer, speech recognition stops after 5 seconds
@@ -327,127 +263,17 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         
     }
     
-    
-   // This function will be called every time a speech finishes
+// This function will be called every time a speech finishes
    func speechDidFinish() {
-//       print(self.isfinished)
-//       self.isfinished = true
-//       print(self.isfinished)
-       
        print("speech did finish invoked")
- 
-       
-       if (invalidresp == false) {
-           
+        if (invalidresp == false) {
            self.busservices = []
-           
            DispatchQueue.main.async {
-               
-               
-//               print(self.speechRecognizer.task?.state)
-//               self.speechRecognizer.task?.finish()
                self.speechRecognizer.reset()
-//               self.speechRecognizer = SpeechRecognizer()
                self.speechRecognizer.transcribe()
                self.waitSpeechtoFinishTimer()
 
-
            }
-
        }
-       
-       
    }
-    
-    
-    
-
-    
 }
-   
-    
-    
-
-//class texttospeech: AVSpeechUtterance {
-//
-//    var utterance = AVSpeechUtterance(string: "What bus number are you waiting for?")
-//
-//    let sysvoice = AVSpeechSynthesisVoice(language: "en-GB")
-//
-//    var hasbeenspoken = true
-//
-//    func initutterance(voiceouttext: String) {
-//
-//
-//        utterance = AVSpeechUtterance(string: voiceouttext)
-//
-////        didFinish utterance
-//
-//        print(utterance.speechString)
-//
-//        utterance.rate = 0.45
-//        utterance.pitchMultiplier = 0.8
-//        utterance.postUtteranceDelay = 0.2
-//        utterance.volume = 0.8
-//
-//        utterance.voice = sysvoice
-//
-////        utterance.
-//    }
-//
-//
-//    func speechsynthesiser()-> Bool {
-//
-////        self.hasbeenspoken = false
-//        let synthesizer = AVSpeechSynthesizer()
-//        synthesizer.speak(self.utterance)
-//
-////        var timetospeak = utterance.rate * Float(lengthutterance.speechString)
-//
-////        synthesizer.(_:didFinish:)
-//
-////        print(timetospeak)
-//
-////        while(synthesizer.isSpeaking){
-////
-////            continue
-////        }
-////
-////        print(synthesizer.isPaused)
-//
-//        return synthesizer.isSpeaking
-//
-//
-//    }
-//
-//
-//
-//}
-//
-//
-//
-//
-//
-//
-////
-////let utterance = AVSpeechUtterance(string: "The quick brown fox jumped over the lazy dog.")
-////
-////// Configure the utterance.
-////utterance.rate = 0.57
-////utterance.pitchMultiplier = 0.8
-////utterance.postUtteranceDelay = 0.2
-////utterance.volume = 0.8
-////
-////// Retrieve the British English voice.
-////let voice = AVSpeechSynthesisVoice(language: "en-GB")
-////
-////// Assign the voice to the utterance.
-////utterance.voice = voice
-////
-////// Create a speech synthesizer.
-////let synthesizer = AVSpeechSynthesizer()
-////
-////// Tell the synthesizer to speak the utterance.
-////synthesizer.speak(utterance)
-//
-
