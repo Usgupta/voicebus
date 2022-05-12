@@ -1,4 +1,4 @@
-# VoiceBus : Bus Detection App for Visually Impaired
+# VoiceBus : An Inclusive Bus Detection App
 
 ## Background
 
