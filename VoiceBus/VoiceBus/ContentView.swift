@@ -141,6 +141,7 @@ struct ContentView: View {
         DispatchQueue.main.async {
             texttoaudio = TextToAudio()
             texttoaudio.verifybusStop = verifyBusStopbuttonTapped
+             texttoaudio.speechRecognizer.reset()
             texttoaudio.canSpeak.sayThis(texttoaudio.TTSques)
         }
         

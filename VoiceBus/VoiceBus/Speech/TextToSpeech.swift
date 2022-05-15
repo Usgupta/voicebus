@@ -39,7 +39,7 @@ class CanSpeak: NSObject, AVSpeechSynthesizerDelegate {
         utterance.voice = voiceToUse
         utterance.rate = 0.5
         utterance.volume = 0.8
- 
+
         voiceSynth.speak(utterance)
         
         print("speaking completed, spoken text: ", utterance)
