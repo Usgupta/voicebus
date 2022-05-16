@@ -1,5 +1,11 @@
 # VoiceBus : An Inclusive Bus Detection App
 
+## Download 
+
+
+
+[<img src="https://user-images.githubusercontent.com/57800546/168635213-dbe5124a-c57f-4d20-9470-b91425f3c53b.png" width="25%">](https://apps.apple.com/app/voicebus/id1624028704 "VoiceBus")
+
 ## Background
 
 Visually impaired users need a simplified and interactive application to quickly check their current bus stop number and arrival timing of their desired bus. Currently most of the existing bus stop applications use voiceover to read out the bus timings and bus stop number. Therefore, to provide a better user experience, we introduce VoiceBus that allows the users to interact with the application and obtain the bus arrival time/bus stop number.
