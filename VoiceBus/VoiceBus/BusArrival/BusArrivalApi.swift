@@ -19,8 +19,8 @@ class BusArrivalApi: ObservableObject {
         }
 
         var request = URLRequest(url: url)
-        request.addValue("IMC5QMM+QRixua7zFSeB3w==", forHTTPHeaderField: "AccountKey")
-//        request.addValue("insert api key here", forHTTPHeaderField: "AccountKey")
+        
+        request.addValue("insert api key here", forHTTPHeaderField: "AccountKey")
 
 
         
