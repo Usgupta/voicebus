@@ -106,7 +106,7 @@ If you have any questions or suggestions about my Privacy Policy, do not hesitat
 
 <p align="left">
    <ol>
-   <li>Umang Gupta 
+   <li>Umang Gupta (Lead Developer)
       
   <a href="https://github.com/Usgupta/#gh-light-mode-only">
     <img src="https://user-images.githubusercontent.com/3369400/139448065-39a229ba-4b06-434b-bc67-616e2ed80c8f.png#gh-light-mode-only" width="13.5" height="13.5" />
