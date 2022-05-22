@@ -27,7 +27,7 @@ Visually impaired users need a simplified and interactive application to quickly
 
 ## How to Build
 
-1. Fork or clone the repository
+1. Fork or clone this repository
 2. Request for API key at http://datamall.lta.gov.sg
 3. Insert API key into BusArrivalApi.swift and BusStopApi.swift
 4. Run the xcode project
