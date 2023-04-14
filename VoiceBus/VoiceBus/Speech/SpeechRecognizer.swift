@@ -62,13 +62,6 @@ class SpeechRecognizer: ObservableObject{
         }
     }
     
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-//    deinit {
-//        reset()
-//    }
     
     /**
         Begin transcribing audio.
@@ -229,83 +222,4 @@ extension String {
         return number
     }
 }
-
-//
-//recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest,
-////                    resultHandler: { (result, error) in
-////
-////                        var isFinal = false
-////
-////                        if result != nil {
-////
-////                            self.inputTextView.text = result?.bestTranscription.formattedString
-////                            isFinal = (result?.isFinal)!
-////                        }
-////
-////                        if let timer = self.detectionTimer, timer.isValid {
-////                            if isFinal {
-////                                self.inputTextView.text = ""
-////                                self.textViewDidChange(self.inputTextView)
-////                                self.detectionTimer?.invalidate()
-////                            }
-////                        } else {
-////                            self.detectionTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { (timer) in
-////                                self.handleSend()
-////                                isFinal = true
-////                                timer.invalidate()
-////                            })
-////                        }
-////
-////                    })
-//
-////                    timer.invalidate()
-////                    timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
-//
-
-
-
-
-//                    if let timer = self.detectionTimer, timer.isValid {
-//                        if isFinal {
-//                            self.inputTextView.text = ""
-//                            self.textViewDidChange(self.inputTextView)
-//                            self.detectionTimer?.invalidate()
-//
-//                        }
-//
-//                    } else {
-//                        self.detectionTimer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { (timer) in
-////                            self.handleSend()
-//                            isFinal = true
-//                            timer.invalidate()
-//
-//                        }
-//
-//                    }
-//
-//
-//print("number",result.bestTranscription.formattedString.numericValue)
-//
-////                        timer.invalidate()
-////                        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
-////
-////                        print("after timer",result.bestTranscription.formattedString)
-//
-//
-//
-////                        count 3 works for 1 input but not for some test cases like 125 or bigger numbers, also the issue of number is alphabets rather than digits
-//
-////                        if(count==4){
-////                            print("we are stopping")
-////                            print(result.bestTranscription.formattedString)
-////
-////                            self.reset()
-////                        }
-//
-////                        if  numberInput == "" {
-////                            timer.invalidate()
-////                            timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: "didFinishTalk", userInfo: nil, repeats: false)
-////                        } else {
-////                            // do your stuff using "strWord"
-//
 
