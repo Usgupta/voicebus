@@ -99,8 +99,6 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     override init() {
         
-        print("i am initialising text to speech")
-        
         super.init()
         self.canSpeak.delegate = self
         self.isValidBusNo = false
@@ -174,7 +172,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     fileprivate func busApiFindBusTiming() {
         BusArrivalApi().loadData(busStopCode: self.busStopCode, busServices: self.busservices) { item in
             self.busTimings = ""
-            print("inside bus api printing item",item)
+
             
             for busService in self.busservices {
                 self.busTimings += "Bus \(busService) is coming in \(item[busService] ?? "NIL") minutes..\n"
@@ -199,11 +197,11 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         self.isValidBusNo = true
         // add the given bus number to our bus number array
         self.busservices.append(self.speechRecognizer.transcript)
-        print(self.busservices, " bus no array")
+
     }
     
     fileprivate func invalidresponse() {
-        print("invalid input, pls press the button and try again")//speak this using texttoaudio and dont call bus api
+
         
         self.invalidresp = true // set invalid response to true
         self.canSpeak.sayThis("invalid input, please press the button and try again")
@@ -211,7 +209,6 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     fileprivate func reinitialiseAudio() {
         // reinitialising audio for voiceover to continue working, as while destroying speech recognition, we destroy audio engine object as well,
-        print("re-initialiaing audio")
         
         do {
             let _ = try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback,
@@ -223,7 +220,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
 
     
     fileprivate func resetSpeechSynthesizer() {
-        print("destroying speech recognition task")
+
         self.speechRecognizer.reset()
         self.speechRecognizer.task?.finish()
         self.speechRecognizer.task?.cancel()
@@ -231,7 +228,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
     
     fileprivate func buildtimer() -> Timer {
         return Timer.scheduledTimer(withTimeInterval: 5, repeats: false, block: { (timer) in
-            print("transcript to be stopped 5 secs are finished")
+
             print(self.speechRecognizer.transcript)
 
             defer {
@@ -247,7 +244,7 @@ class TextToAudio: NSObject, CanSpeakDelegate {
             
             self.validresponse()
             
-            print("bus stop api is being invoked")
+
             print(self.busStopCode," bus stop code b4 bus api")
             
             self.busApiFindBusTiming()
@@ -259,13 +256,11 @@ class TextToAudio: NSObject, CanSpeakDelegate {
         // 5 seconds timer, speech recognition stops after 5 seconds
         self.timer = buildtimer()
         
-        print("outside timer loop")
-        
     }
     
 // This function will be called every time a speech finishes
    func speechDidFinish() {
-       print("speech did finish invoked")
+
         if (invalidresp == false) {
            self.busservices = []
            DispatchQueue.main.async {
