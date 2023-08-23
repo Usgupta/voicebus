@@ -2,7 +2,7 @@
 
 ## Download 
 
-
+Disclaimer: The app is not available on the app store any more as I only had one year of apple membership
 
 [<img src="https://user-images.githubusercontent.com/57800546/168635213-dbe5124a-c57f-4d20-9470-b91425f3c53b.png" width="25%">](https://apps.apple.com/app/voicebus/id1624028704 "VoiceBus")
 
