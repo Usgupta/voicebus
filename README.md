@@ -18,6 +18,8 @@ Visually impaired users need a simplified and interactive application to quickly
 4. Completely accessible using VoiceOver
 5. Receive notifications of the bus arrival (if the app is open in background)
 
+## Demo Video
+[![IMAGE ALT TEXT](https://i.ytimg.com/an_webp/pHnS5BMzTfg/mqdefault_6s.webp?du=3000&sqp=COiGlacG&rs=AOn4CLC0FUcFTET3IJNdfPenBJS3m9Nxpg)](https://youtu.be/pHnS5BMzTfg "VoiceBus Demo")
 
 
 ## Screenshots
